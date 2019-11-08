@@ -1,50 +1,9 @@
 import 'package:flutter/material.dart';
+import 'class/AppTeste.dart';
 
 void main() => runApp(Teste());
 
 
-class Teste extends StatelessWidget{
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(title:  'Teste',theme: ThemeData(
-      primarySwatch: Colors.blue
-    ),
-    home: MyTestePage(title: 'Teste pingulin'),);
-  }
-}
-
-class MyTestePage extends StatefulWidget{
-  MyTestePage({Key key,this.title}): super(key:key);
-  final String title;
-
-  _MyTestePageState createState() => _MyTestePageState();
-}
-
-class _MyTestePageState extends State<MyTestePage>{
-  int _counter = 0;
-  String _nome = "Wesley";
-  String _child = "Teste";
-
-   void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(title: Text("Bem Vindo: $_nome"),),
-      body: Center(child: Text ('$_child')),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() {_child = "Clicou, Perdeu"; _nome = "sopa de macaco";}),
-        child: const Icon(Icons.add_to_photos),
-      ),
-      backgroundColor: Colors.red,
-      );
-  }
-}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
