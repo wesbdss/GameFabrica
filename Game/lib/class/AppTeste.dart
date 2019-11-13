@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
+
 
 
 class Teste extends StatelessWidget{
@@ -23,6 +25,8 @@ class _MyTestePageState extends State<MyTestePage>{
   String _nome = "Wesley";
   String _child = "Teste";
 
+  final control = TextEditingController();
+
    void _incrementCounter() {
     setState(() {
       _counter++;
@@ -32,17 +36,21 @@ class _MyTestePageState extends State<MyTestePage>{
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return meuWidget2();
+}
+
+Widget teste(){
+return Scaffold(
       appBar: AppBar(title: Text("Bem Vindo: $_nome"),),
       body: Center(child:GestureDetector(
-      onTap: () => setState (() {_counter++;_nome = "O gay clicou $_counter vezes";}),
+      onTap: () => setState (() {_counter++;_nome = "Você clicou $_counter vezes";}),
       child: Image.asset('images/01.gif'),
       ),
     ),
       backgroundColor: Colors.red,
       );
   }
-}
+
 
 Widget meuWidget(){
   return Center(child: Container(
@@ -55,4 +63,15 @@ Widget meuWidget(){
    ),
   )
   );
+}
+
+Widget meuWidget2(){
+    return Scaffold(appBar: AppBar(title: Text("Teste de Backend"),),
+    body: Column(children: <Widget>[
+      Text('Teste Back end do $_nome'),
+      Center (child: TextField(decoration: InputDecoration(labelText: 'Teste Backend2'),controller: control,)), 
+      IconButton(icon: Image.asset('images/01.gif'),onPressed: (){setState((){_nome = control.text;});}),]
+    ),
+    );
+}
 }

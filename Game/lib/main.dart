@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'class/AppTeste.dart';
 
-void main() => runApp(Teste());
+void main() => runApp(MyApp());
 
 
 
@@ -23,7 +23,13 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.red,
       ),
-      home: MyHomePage(title: 'Testing Flutter'),
+      //home: MyHomePage(title: 'Testing Flutter'),
+      routes: <String,WidgetBuilder>{
+      '/': (BuildContext context)=> 
+        new MyHomePage(title: 'Flutter Demo Home Page',),
+      '/class/AppTeste': (BuildContext context) =>
+        new MyTestePage(title: 'pingulino')
+    }
     );
   }
 }
@@ -44,6 +50,7 @@ class MyHomePage extends StatefulWidget {
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
+  
 }
 
 class _MyHomePageState extends State<MyHomePage> {
@@ -58,7 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+    
   }
+  void _passa()=> Navigator.pushNamed(context, '/class/AppTeste');
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _passa,
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
