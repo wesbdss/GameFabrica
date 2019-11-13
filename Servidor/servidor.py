@@ -13,9 +13,8 @@ class SocketHandle(tornado.websocket.WebSocketHandler):
         print(self.get)
       
     def on_message(self, message):
-        print ('message received:  %s' % message)
-        print ('sending back message: %s' % message[::-1])
-        self.write_message(message[::-1])
+        print ('Printando:  %s' % message)
+        self.write_message(b'ok')
  
     def on_close(self):
         print ('connection closed')
@@ -34,5 +33,5 @@ if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(8080)
     myIP = socket.gethostbyname(socket.gethostname())
-    print ('*** Websocket Server Started at %s***' % myIP)
+    print ('*** Websocket Server Started at %s ***' % myIP)
     tornado.ioloop.IOLoop.instance().start()

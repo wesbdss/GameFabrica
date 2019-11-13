@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'class/AppTeste.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(Teste());
 
 
 
