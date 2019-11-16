@@ -2,21 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:teste1/servicos/conexao.dart';
 
-class Loading extends StatefulWidget {
+class Pareamento extends StatefulWidget {
   @override
-  _LoadingState createState() => _LoadingState();
+  _PareamentoState createState() => _PareamentoState();
 }
 
-class _LoadingState extends State<Loading> {
-
-  /* 
-    Função que vai esperar a conexão com o servidor ser estabelecida
-    O servidor deve retornar: nome, vit, der, %v/d, pontos
-  */
-  void setupApp() async {
+class _PareamentoState extends State<Pareamento> {
+  void parear () async {
     Conexao instance = Conexao();
-    await instance.getInfo();
-    Navigator.pushReplacementNamed(context, '/home', arguments: {
+    await instance.getInfoInimigo();
+    Navigator.pushReplacementNamed(context, '/jogo', arguments: {
       'nome': instance.nome,
       'vitoria': instance.vitoria,
       'derrota': instance.derrota,
@@ -28,7 +23,7 @@ class _LoadingState extends State<Loading> {
   @override
   void initState(){
     super.initState();
-    setupApp();
+    parear();
   }
 
   @override

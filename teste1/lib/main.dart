@@ -4,6 +4,7 @@ import 'package:teste1/telas/loading.dart';
 import 'package:teste1/telas/vitoria.dart';
 import 'package:teste1/telas/derrota.dart';
 import 'package:teste1/telas/placar.dart';
+import 'package:teste1/telas/jogo.dart';
 
 void main() => runApp(MaterialApp(
   initialRoute: '/',
@@ -13,5 +14,6 @@ void main() => runApp(MaterialApp(
     '/vitoria': (context) => Vitoria(),
     '/derrota': (context) => Derrota(),
     '/placar': (context) => Placar(),
+    '/jogo': (context) => Jogo(),
   },
 ));
