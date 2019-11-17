@@ -18,21 +18,21 @@ class _HomeState extends State<Home> {
     
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
-    //String bgImage = 'caminho da imagem';
-    //String bgColor = Colors.black; isso põe cor na barra onde ficam os dados do celular
+    String bgImage = 'fundo.jpg';
+    Color bgColor = Colors.black; // isso põe cor na barra onde ficam os dados do celular
 
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: bgColor,
       body: SafeArea(
         child: Container(
           decoration: BoxDecoration(
-            /*image: DecorationImage(
+            image: DecorationImage(
               image: AssetImage('assets/$bgImage'),
               fit: BoxFit.cover,
-            )*/
+            )
           ),
           child: Padding(
-            padding: const EdgeInsets.all(25.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
                 Text(
@@ -61,7 +61,7 @@ class _HomeState extends State<Home> {
                 Text(
                   dados['pontos'].toString(),
                 ),
-                SizedBox(height: 500.0),
+                SizedBox(height: 200.0),
                 RaisedButton(
                   child: Text(
                     'Jogar',

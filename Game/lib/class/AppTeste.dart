@@ -21,7 +21,7 @@ class Teste extends StatelessWidget {
 class MyTestePage extends StatefulWidget {
   MyTestePage({Key key, this.title}) : super(key: key);
   final String title;
-  final channel = IOWebSocketChannel.connect('ws://192.168.0.106:8080');
+  final channel = IOWebSocketChannel.connect('ws://'+ip+'');;
 
   @override
   _MyTestePageState createState() => _MyTestePageState();
@@ -31,6 +31,7 @@ class _MyTestePageState extends State<MyTestePage> {
   int _counter = 0;
   String _nome = "Wesley";
   String _child = "Teste";
+  
 
   final control = TextEditingController();
 
@@ -41,8 +42,15 @@ class _MyTestePageState extends State<MyTestePage> {
   }
 
   void _sendMessage(String mes){
-    widget.channel.sink.add(mes);
+    channel.sink.add(mes);
   }
+
+  void _disconect(){
+    setState(() {
+          _nome = "Não tem conexão!";
+        });
+    }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +97,7 @@ class _MyTestePageState extends State<MyTestePage> {
         Text('Teste Back end do $_nome'),
         Center(
             child: TextField(
-          decoration: InputDecoration(labelText: 'Teste ${widget.channel}'),
+          decoration: InputDecoration(labelText: 'Teste ${channel}'),
           controller: control,
         )),
         IconButton(
@@ -100,6 +108,12 @@ class _MyTestePageState extends State<MyTestePage> {
                 _nome = control.text;
               });
             }),
+            IconButton(
+              icon: Image.asset('images/perfil.png'),
+              onPressed: (){
+                _connect('192.168.0.101:8080');
+              }
+            ),
       ]),
     );
   }

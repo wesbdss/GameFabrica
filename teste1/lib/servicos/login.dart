@@ -46,12 +46,21 @@ class _LoginState extends State<Login> {
 
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
+    String bgImage = 'fundo.jpg';
+    Color bgColor = Colors.black;
+
     return Scaffold(
-      backgroundColor: Colors.grey[500],
+      backgroundColor: bgColor,
       body: SafeArea(
         child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/$bgImage'),
+              fit: BoxFit.cover,
+            )
+          ),
           child: Padding(
-            padding: const EdgeInsets.all(25.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
                 Text(
@@ -59,6 +68,7 @@ class _LoginState extends State<Login> {
                   style: TextStyle(
                     fontSize: 28.0,
                     fontWeight: FontWeight.bold,
+                    color: Colors.yellow,
                   ),
                 ),
                 SizedBox(height: 50.0),
@@ -67,10 +77,18 @@ class _LoginState extends State<Login> {
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
+                    color: Colors.yellow,
                   ),
                 ),
                 SizedBox(width: 10.0),
                 TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  style: TextStyle(
+                    color: Colors.yellow,
+                  ),
+                  autocorrect: false,
                   onChanged: (String valor) {inputUser(valor);},
                 ),
                 SizedBox(height: 50.0),
@@ -79,10 +97,17 @@ class _LoginState extends State<Login> {
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
+                    color: Colors.yellow,
                   ),
                 ),
                 SizedBox(width: 50.0),
                 TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  style: TextStyle(
+                    color: Colors.yellow,
+                  ),
                   obscureText: true,
                   onChanged: (String valor) {inputPassword(valor);},
                 ),

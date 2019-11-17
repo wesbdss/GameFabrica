@@ -12,9 +12,10 @@ class Conexao {
 
   // função só pra dar um tempo pra fingir q ta conectando
   void cont() {
-    for(int i = 0; i < 250; i++){
-      print(i+1);
+    int i;
+    for(i = 0; i < 500; i++){      
     }
+    print(i);
   }
 
   // Função que vai buscar um inimigo e suas informações
