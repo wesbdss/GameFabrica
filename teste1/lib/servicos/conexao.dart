@@ -1,8 +1,12 @@
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/status.dart' as status;
+
 class Conexao {
 
   /*
     credencial vai ser true se o nome e a senha forem válidos, false se for o contrário.
   */
+  var channel;
   String nome, senha, situacao;
   int vitoria, derrota, pontos;
   double ratio;
@@ -48,5 +52,14 @@ class Conexao {
       print(e);
       situacao = 'Não foi possível se conectar com os nossos serviços\ntente reiniciar a aplicação!';
     }
+  }
+
+  Future<void> connect() async{
+    try{
+      channel = IOWebSocketChannel.connect('ws://localhost:8080');
+    }catch (e){
+      print(e);
+    }
+  
   }
 }

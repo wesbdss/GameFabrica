@@ -6,8 +6,23 @@ class Jogo extends StatefulWidget {
 }
 
 class _JogoState extends State<Jogo> {
+
+  Map dados = {};
+
+  void perdeu() {
+    print('indo pra tela de derrota');
+    Navigator.pushReplacementNamed(context, '/derrota', arguments: dados);
+  }
+
+  void ganhou() {
+    print('indo pra tela de vitória');
+    Navigator.pushReplacementNamed(context, '/vitoria', arguments: dados);
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
     String bgImage = 'fundo.jpg';
     Color bgColor = Colors.black;
@@ -23,7 +38,7 @@ class _JogoState extends State<Jogo> {
             )
           ),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
                 SizedBox(height: 25.0),
@@ -44,12 +59,12 @@ class _JogoState extends State<Jogo> {
                 SizedBox(height: 100.0),
                 RaisedButton(
                   child: Text('ganhei'),
-                  onPressed: null,
+                  onPressed: () {ganhou();},
                 ),
                 SizedBox(height: 20.0),
                 RaisedButton(
                   child: Text('perdi'),
-                  onPressed: null,
+                  onPressed: () {perdeu();},
                 ),
               ],
             ),

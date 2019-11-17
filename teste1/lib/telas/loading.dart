@@ -3,6 +3,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:teste1/servicos/conexao.dart';
 
 class Loading extends StatefulWidget {
+
   @override
   _LoadingState createState() => _LoadingState();
 }
@@ -16,6 +17,7 @@ class _LoadingState extends State<Loading> {
   void setupApp() async {
     Conexao instance = Conexao();
     await instance.getInfo();
+    await instance.connect();
     Navigator.pushReplacementNamed(context, '/login', arguments: {
       'nome': instance.nome,
       'vitoria': instance.vitoria,
@@ -23,6 +25,7 @@ class _LoadingState extends State<Loading> {
       'ratio': instance.ratio,
       'pontos': instance.pontos,
       'credencial': instance.credencial,
+      'channel':instance.channel,
     });
   }
 

@@ -21,7 +21,7 @@ class Teste extends StatelessWidget {
 class MyTestePage extends StatefulWidget {
   MyTestePage({Key key, this.title}) : super(key: key);
   final String title;
-  final channel = IOWebSocketChannel.connect('ws://'+ip+'');;
+  final channel = IOWebSocketChannel.connect('ws://'+ip+'');
 
   @override
   _MyTestePageState createState() => _MyTestePageState();

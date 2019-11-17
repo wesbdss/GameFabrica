@@ -12,7 +12,7 @@ class _LoginState extends State<Login> {
 
   void checkCredential() {
     print('User: $username, Senha: $password');
-    if (username == 'allan' && password == 'macaco') {
+    if (username == '' && password == '') {
       dados['credencial'] = true;
     } else {
       dados['credencial'] = false;
@@ -48,6 +48,8 @@ class _LoginState extends State<Login> {
 
     String bgImage = 'fundo.jpg';
     Color bgColor = Colors.black;
+
+    print(dados['channel']);
 
     return Scaffold(
       backgroundColor: bgColor,
