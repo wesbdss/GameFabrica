@@ -12,22 +12,16 @@ class Conexao {
 
   // função só pra dar um tempo pra fingir q ta conectando
   void cont() {
-    for(int i = 0; i < 250; i++){
-      print(i+1);
+    int i;
+    for(i = 0; i < 500; i++){      
     }
+    print(i);
   }
 
   // Função que vai buscar um inimigo e suas informações
   Future<void> getInfoInimigo() async {
     try {           
       cont();
-      // Valores que o servidor vai retornar, por hora ficticios
-      nome = 'allan2';
-      senha = 'allan2';
-      vitoria = 2;
-      derrota = 1;
-      pontos = 10;
-      ratio = 2.0;
     }
     catch (e) {
       //Se não conseguir conectar vai imprimir um erro pro user

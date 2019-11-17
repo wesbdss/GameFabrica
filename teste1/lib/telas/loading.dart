@@ -16,12 +16,13 @@ class _LoadingState extends State<Loading> {
   void setupApp() async {
     Conexao instance = Conexao();
     await instance.getInfo();
-    Navigator.pushReplacementNamed(context, '/home', arguments: {
+    Navigator.pushReplacementNamed(context, '/login', arguments: {
       'nome': instance.nome,
       'vitoria': instance.vitoria,
       'derrota': instance.derrota,
       'ratio': instance.ratio,
       'pontos': instance.pontos,
+      'credencial': instance.credencial,
     });
   }
 
@@ -33,12 +34,24 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
+
+    String bgImage = 'fundo.jpg';
+    Color bgColor = Colors.black;
+
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: bgColor,
       body: Center(
-        child: SpinKitFadingCube(
-          color: Colors.white,
-          size: 60.0,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/$bgImage'),
+              fit: BoxFit.cover,
+            )
+          ),
+          child: SpinKitFadingCube(
+            color: Colors.white,
+            size: 60.0,
+          ),
         ),
       ),
     );

@@ -8,16 +8,13 @@ class Pareamento extends StatefulWidget {
 }
 
 class _PareamentoState extends State<Pareamento> {
+
+  Map dados = {};
+
   void parear () async {
     Conexao instance = Conexao();
     await instance.getInfoInimigo();
-    Navigator.pushReplacementNamed(context, '/jogo', arguments: {
-      'nome': instance.nome,
-      'vitoria': instance.vitoria,
-      'derrota': instance.derrota,
-      'ratio': instance.ratio,
-      'pontos': instance.pontos,
-    });
+    Navigator.pushReplacementNamed(context, '/jogo', arguments: dados);
   }
 
   @override
@@ -28,6 +25,9 @@ class _PareamentoState extends State<Pareamento> {
 
   @override
   Widget build(BuildContext context) {
+
+    dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
