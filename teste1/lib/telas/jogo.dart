@@ -27,14 +27,19 @@ class _JogoState extends State<Jogo> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 25.0),
-                Text(
-                  'Jogo',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 28.0,
-                    color: Colors.yellow,
-                  ),
-                  textAlign: TextAlign.center,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Jogo',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28.0,
+                        color: Colors.yellow,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
                 SizedBox(height: 100.0),
                 RaisedButton(
