@@ -14,6 +14,9 @@ class SocketHandle(tornado.websocket.WebSocketHandler):
       
     def on_message(self, message):
         print ('Printando:  %s' % message)
+        if (message == 'quit'):
+            self.write_message(b'fodase')
+            quit()
         self.write_message(b'ok')
  
     def on_close(self):
