@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,6 +16,11 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+    ]);
     
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 

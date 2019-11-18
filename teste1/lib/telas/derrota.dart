@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Derrota extends StatefulWidget {
   @override
@@ -16,10 +17,15 @@ class _DerrotaState extends State<Derrota> {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+    ]);
         
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
-    String bgImage = 'fundo.jpg';
+    String bgImage = 'fundoLoss.jpg';
     Color bgColor = Colors.black;
 
     return Scaffold(
@@ -36,22 +42,19 @@ class _DerrotaState extends State<Derrota> {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
-                SizedBox(height: 25.0),
+                GameOver(),
+                Trofeu(),
+                Defeat(),
+                SizedBox(height: 30.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(
-                      'Tela Vitoria',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 28.0,
-                        color: Colors.yellow,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                    Star(),
+                    SizedBox(width: 5.0),
+                    Pontos(),
                   ],
                 ),
-                SizedBox(height: 100.0),
+                SizedBox(height: 50.0),
                 RaisedButton(
                   child: Text('voltar'),
                   onPressed: () {voltarHome();},
@@ -60,6 +63,73 @@ class _DerrotaState extends State<Derrota> {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Trofeu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //AssetImage trofeu = AssetImage('assets/trophyWin.png');
+    //Image image = Image(image: trofeu, width: 10, height: 20,);
+    return Container(
+      child: Image.asset(
+        'assets/trophyWin.png',
+        height: 150.0,
+        width: 200.0
+      ),
+    );
+  }
+}
+
+class GameOver extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Image.asset(
+        'assets/gameover.png',
+        height: 100.0,
+        width: 150.0,
+      ),
+    );
+  }
+}
+
+class Defeat extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Image.asset(
+        'assets/defeat.png',
+        height: 100.0,
+        width: 150.0,
+      ),
+    );
+  }
+}
+
+class Star extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Image.asset(
+        'assets/star.png',
+        height: 20.0,
+        width: 20.0,
+      ),
+    );
+  }
+}
+
+class Pontos extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Image.asset(
+        'assets/pontos.png',
+        height: 20.0,
+        width: 80.0,
       ),
     );
   }

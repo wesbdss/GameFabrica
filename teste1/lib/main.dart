@@ -5,7 +5,6 @@ import 'package:teste1/telas/loading.dart';
 import 'package:teste1/telas/oponentes.dart';
 import 'package:teste1/telas/vitoria.dart';
 import 'package:teste1/telas/derrota.dart';
-import 'package:teste1/telas/placar.dart';
 import 'package:teste1/telas/jogo.dart';
 import 'package:teste1/servicos/login.dart';
 
@@ -17,7 +16,6 @@ void main() => runApp(MaterialApp(
     '/home': (context) => Home(),
     '/vitoria': (context) => Vitoria(),
     '/derrota': (context) => Derrota(),
-    '/placar': (context) => Placar(),
     '/jogo': (context) => Jogo(),
     '/pareamento': (context) => Pareamento(),
     '/oponentes': (context) => Oponentes(),

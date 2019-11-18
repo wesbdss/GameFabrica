@@ -23,10 +23,12 @@ estrutura json:
 ]
 
 """
+users = []
 with open('dados/users.json','r') as f:
-    users = json.dump(f)
+    users = json.load(f)
 
-
+for x in users:
+    print(x['username'])
 class SocketHandle(tornado.websocket.WebSocketHandler):
 
     connections = set()
@@ -86,19 +88,27 @@ def start():
     pass
 
 
+application = tornado.web.Application([
+    (r'/', SocketHandle),
+    ])
+
 
 def main():
-    application = tornado.web.Application([
-        (r'/', SocketHandle),
-    ])
-    
-    
     if __name__ == "__main__":
-        http_server = tornado.httpserver.HTTPServer(application)
-        http_server.listen(8080)
-        myIP = socket.gethostbyname(socket.gethostname())
-        print ('*** Websocket Server Started at %s ***' % myIP)
-        tornado.ioloop.IOLoop.instance().start()
+        import time, threading
+        threading.Thread(target=startTornado).start()
+        input("Aperta Enter")
+        stopTornado()
 
+def startTornado():
+    http_server = tornado.httpserver.HTTPServer(application)
+    http_server.listen(8080)
+    myIP = socket.gethostbyname(socket.gethostname())
+    print ('*** Websocket Server Started at %s ***' % myIP)
+    tornado.ioloop.IOLoop.instance().start()
+
+def stopTornado():
+    tornado.ioloop.IOLoop.instance().stop()
+
+    
 main()
-

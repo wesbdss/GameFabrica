@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:teste1/servicos/conexao.dart';
 
@@ -25,6 +26,11 @@ class _PareamentoState extends State<Pareamento> {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+    ]);
 
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 

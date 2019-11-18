@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:teste1/servicos/conexao.dart';
 import 'dart:convert';
 
@@ -72,6 +73,11 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+    ]);
 
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
