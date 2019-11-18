@@ -23,10 +23,10 @@ estrutura json:
 ]
 
 """
-users = json.dumps([{'username':'Allan','pass':'macaco'},{'username':'wey','pass':'wey'}])
+users = json.loads('[{"username":"Allan","pass":"macaco"},{"username":"wey","pass":"wey"}]')
 
 class SocketHandle(tornado.websocket.WebSocketHandler):
-    
+    lobby = []
     def open(self):
         print ('new connection')
         print(self.get)
@@ -36,6 +36,7 @@ class SocketHandle(tornado.websocket.WebSocketHandler):
         try:
             msg = str(message)
             obj = json.loads(msg)
+            print(obj['function'])
             
             if obj['function'] == 'login' and (obj['username'] != '' or obj['pass'] != ''):
                 user = obj['username']
@@ -44,15 +45,21 @@ class SocketHandle(tornado.websocket.WebSocketHandler):
                     if x['username'] == obj['username'] and x['pass'] == obj['pass']:
                         self.write_message(json.dumps({'response':'true'}))
                         auth =1
-                        return
+                        print(x['username']+" Entrou no lobby")
+                        lobby.append(x['username'],self.get)
+                        break
+                        #return
                 if auth == 0:
-                    self.write_message(json.dumps({'response':'false'}))
-                    return 
+                    write_message(json.dumps({'response':'false'}))
+                    print(x['username']+" Não Encontrado com Sucesso")
+                    return
+
+            print(lobby)
 
             if (message == 'quit'):
                 self.write_message(b'fodase')
                 quit()
-            self.write_message(json.dumps({'response':'Te comi mesmo'}))
+            #self.write_message(json.dumps({'response':'Te comi mesmo'}))
         except Exception:
             print("Erro: ",sys.exc_info()[0])
             quit()
@@ -64,6 +71,10 @@ class SocketHandle(tornado.websocket.WebSocketHandler):
         return True
  
     
+def start():
+    pass
+
+
 
 def main():
     application = tornado.web.Application([

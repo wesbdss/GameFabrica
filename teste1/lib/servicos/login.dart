@@ -3,6 +3,7 @@ import 'package:teste1/servicos/conexao.dart';
 import 'dart:convert';
 
 class Login extends StatefulWidget {
+  String credencial = 'false';
   @override
   _LoginState createState() => _LoginState();
 }
@@ -12,27 +13,35 @@ class _LoginState extends State<Login> {
   String username = '', password = '';
   Map dados = {};
 
-  void checkCredential() {
+  void checkCredential() async { 
     print('User: $username, Senha: $password');
     var encode = json.encode({"function":"login","username":"$username","pass":"$password"});
     dados['channel'].sink.add(encode);
-    var result;
     dados['channel'].stream.listen((message) {
-      result = json.decode(message);
-      print(result['response']);
+      var result = json.decode(message);
+      print(result);
+      setState(() {
+        if (result['response'] == 'true'){
+          dados['credencial']= 'true';
+          widget.credencial = 'true';
+          login(true);
+          return;
+        } else {
+          dados['credencial']= 'false';
+          widget.credencial = 'false';
+          login(false);
+          return;      
+        }
+      });
     });
-    if (result['response'] == 'true') {
-      dados['credencial'] = true;
-    } else {
-      dados['credencial'] = false;
-    }
   }
-
-  void login() async {
-    checkCredential();
-    if(dados['credencial'] == true) {
+  
+  void login(bool x) async {
+    Conexao instance = Conexao();
+    dados['credencial'] = x;
+    //print("3: ${dados['credencial']}");
+    if(x) {
       print('login succesful');
-      Conexao instance = Conexao();
       await instance.getInfo();
       Map dados2 = {
         'nome': instance.nome,
@@ -140,7 +149,7 @@ class _LoginState extends State<Login> {
                 ),
                 RaisedButton(
                   child: Text('Logar'),
-                  onPressed: () {login();},
+                  onPressed: () {checkCredential();},
                 ),
               ],
             ),

@@ -19,7 +19,8 @@ class _VitoriaState extends State<Vitoria> {
 
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
-    String bgImage = 'fundo.jpg';
+    String bgImage = 'fundoWin.jpg';
+    String imgTrophy = 'trophyWin.png';
     Color bgColor = Colors.black;
 
     return Scaffold(
@@ -37,6 +38,8 @@ class _VitoriaState extends State<Vitoria> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 25.0),
+                Trofeu(),
+                SizedBox(height: 10.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -62,5 +65,14 @@ class _VitoriaState extends State<Vitoria> {
         ),
       ),
     );
+  }
+}
+
+class Trofeu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    AssetImage trofeu = AssetImage('assets/trophyWin.png');
+    Image image = Image(image: trofeu, width: 10, height: 20,);
+    return Container(child: Image.asset('assets/trophyWin.png'),);
   }
 }
