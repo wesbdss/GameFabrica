@@ -1,5 +1,6 @@
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Conexao {
 
@@ -36,7 +37,7 @@ class Conexao {
 
   // Função que vai retornar as informações da pessoa
   Future<void> getInfo() async {
-    // Vai tentar conectar com o servidor 
+    // Vai tentar conectar com o servidor
     try {           
       cont();
       // Valores que o servidor vai retornar, por hora ficticios
@@ -56,10 +57,10 @@ class Conexao {
 
   Future<void> connect() async{
     try{
-      channel = IOWebSocketChannel.connect('ws://localhost:8080');
-    }catch (e){
+      channel = IOWebSocketChannel.connect('ws://192.168.0.101:8080');
+    }catch(e){
       print(e);
+
     }
-  
   }
 }

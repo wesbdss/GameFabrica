@@ -3,7 +3,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:teste1/servicos/conexao.dart';
 
 class Loading extends StatefulWidget {
-
   @override
   _LoadingState createState() => _LoadingState();
 }
@@ -12,20 +11,16 @@ class _LoadingState extends State<Loading> {
 
   /* 
     Função que vai esperar a conexão com o servidor ser estabelecida
-    O servidor deve retornar: nome, vit, der, %v/d, pontos
+    O servidor deve retornar: conexão bem sucedida ou não
   */
+  
+
   void setupApp() async {
     Conexao instance = Conexao();
-    await instance.getInfo();
+    //await instance.getInfo();
     await instance.connect();
     Navigator.pushReplacementNamed(context, '/login', arguments: {
-      'nome': instance.nome,
-      'vitoria': instance.vitoria,
-      'derrota': instance.derrota,
-      'ratio': instance.ratio,
-      'pontos': instance.pontos,
-      'credencial': instance.credencial,
-      'channel':instance.channel,
+      'channel': instance.channel,
     });
   }
 
@@ -51,9 +46,27 @@ class _LoadingState extends State<Loading> {
               fit: BoxFit.cover,
             )
           ),
-          child: SpinKitFadingCube(
-            color: Colors.white,
-            size: 60.0,
+          child: Padding(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 150.0),
+                Text(
+                  'Loading . . .',
+                  style: TextStyle(
+                    fontSize: 28.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.yellow,
+                    letterSpacing: 5.0,
+                  ),
+                ),
+                SizedBox(height: 200.0),
+                SpinKitFadingCube(
+                  color: Colors.white,
+                  size: 60.0,
+                ),
+              ],
+            ),
           ),
         ),
       ),

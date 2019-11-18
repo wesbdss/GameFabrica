@@ -4,6 +4,13 @@ import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:flutter/foundation.dart';
+// n esquece da porra do IP certo (externo)
+// var encode = json.encode({'comi':'sua mae'});
+    // print(dados['channel'].sink.add(encode));
+    // dados['channel'].stream.listen((message) {
+    //   var decode = json.decode(message);
+    //   print(decode['response']);
+    // });
 
 class Teste extends StatelessWidget {
   @override
@@ -13,16 +20,17 @@ class Teste extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.green),
       home: MyTestePage(
         title: 'Teste pingulin',
+        channel: IOWebSocketChannel.connect('ws://localhost:8080'),
       ),
     );
   }
 }
 
 class MyTestePage extends StatefulWidget {
-  MyTestePage({Key key, this.title}) : super(key: key);
   final String title;
-  final channel = IOWebSocketChannel.connect('ws://'+ip+'');
+  final WebSocketChannel channel;
 
+  
   @override
   _MyTestePageState createState() => _MyTestePageState();
 }

@@ -48,13 +48,13 @@ class _VitoriaState extends State<Vitoria> {
                         color: Colors.yellow,
                       ),
                       textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: 100.0),
-                    RaisedButton(
-                      child: Text('voltar'),
-                      onPressed: () {voltarHome();},
-                    ),
+                    )
                   ],
+                ),
+                SizedBox(height: 100.0),
+                RaisedButton(
+                  child: Text('voltar'),
+                  onPressed: () {voltarHome();},
                 ),
               ],
             ),

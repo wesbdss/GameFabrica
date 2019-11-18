@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 
-class Derrota extends StatefulWidget {
+class Oponentes extends StatefulWidget {
   @override
-  _DerrotaState createState() => _DerrotaState();
+  _OponentesState createState() => _OponentesState();
 }
 
-class _DerrotaState extends State<Derrota> {
-
-  void voltarHome() {
-    print('voltando pra tela home');
-    Navigator.pushReplacementNamed(context, '/home', arguments: dados);
-  }
+class _OponentesState extends State<Oponentes> {
 
   Map dados = {};
 
+  void jogar() {
+    Navigator.pushReplacementNamed(context, '/jogo', arguments: dados);
+  }
+
   @override
   Widget build(BuildContext context) {
-        
+
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
     String bgImage = 'fundo.jpg';
@@ -30,7 +29,7 @@ class _DerrotaState extends State<Derrota> {
             image: DecorationImage(
               image: AssetImage('assets/$bgImage'),
               fit: BoxFit.cover,
-            ),
+            )
           ),
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -41,7 +40,7 @@ class _DerrotaState extends State<Derrota> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      'Tela Vitoria',
+                      'Oponentes',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 28.0,
@@ -53,9 +52,9 @@ class _DerrotaState extends State<Derrota> {
                 ),
                 SizedBox(height: 100.0),
                 RaisedButton(
-                  child: Text('voltar'),
-                  onPressed: () {voltarHome();},
-                ),
+                  child: Text('jogar'),
+                  onPressed: () {jogar();},
+                )
               ],
             ),
           ),

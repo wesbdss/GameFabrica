@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:teste1/servicos/conexao.dart';
+import 'dart:convert';
 
 class Login extends StatefulWidget {
   @override
@@ -12,18 +14,36 @@ class _LoginState extends State<Login> {
 
   void checkCredential() {
     print('User: $username, Senha: $password');
-    if (username == '' && password == '') {
+    var encode = json.encode({"function":"login","username":"$username","pass":"$password"});
+    dados['channel'].sink.add(encode);
+    var result;
+    dados['channel'].stream.listen((message) {
+      result = json.decode(message);
+      print(result['response']);
+    });
+    if (result['response'] == 'true') {
       dados['credencial'] = true;
     } else {
       dados['credencial'] = false;
     }
   }
 
-  void login() {
+  void login() async {
     checkCredential();
     if(dados['credencial'] == true) {
       print('login succesful');
-      Navigator.pushReplacementNamed(context, '/home', arguments: dados);
+      Conexao instance = Conexao();
+      await instance.getInfo();
+      Map dados2 = {
+        'nome': instance.nome,
+        'vitoria': instance.vitoria,
+        'derrota': instance.derrota,
+        'ratio': instance.ratio,
+        'pontos': instance.pontos,
+        'credencial': instance.credencial,
+      };
+      Map concat = {}..addAll(dados2)..addAll(dados);
+      Navigator.pushReplacementNamed(context, '/home', arguments: concat);
     } else {
       print('login fail');
     }
@@ -49,7 +69,12 @@ class _LoginState extends State<Login> {
     String bgImage = 'fundo.jpg';
     Color bgColor = Colors.black;
 
-    print(dados['channel']);
+    // var encode = json.encode({"comi":"sua mae"});
+    // print(dados['channel'].sink.add(encode));
+    // dados['channel'].stream.listen((message) {
+    //   var decode = json.decode(message);
+    //   print(decode['response']);
+    // });
 
     return Scaffold(
       backgroundColor: bgColor,
