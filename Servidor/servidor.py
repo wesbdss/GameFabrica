@@ -23,67 +23,98 @@ estrutura json:
 ]
 
 """
-with open('dados/users.json','r') as f:
-    users = json.dump(f)
+users = []
+with open('dados/users.json','r') as f: #pega os players do arquivo ou servidor
+    users = json.load(f)
 
+
+def login(self,obj):
+    if obj['username'] != '' or obj['pass'] != '':
+        auth = 0
+        for x in users:
+            if x['username'] == obj['username'] and x['pass'] == obj['pass']:
+                self.write_message(json.dumps({'response':'true'}))
+                auth =1
+                print(x['username']+" se conectou no lobby!")
+                self.ready.append((x['username'],self.get))
+                return
+        if auth == 0: 
+            write_message(json.dumps({'response':'false'}))
+            #print(x['username']+" não conectou!")
+            return
+
+def getInfo(self):
+    y = []
+    for x in self.ready:
+        if x[1] == self.get:
+            y = x
+            break
+    for x in users:
+        if x['username'] == y[0]:
+            print("Mandando Infos do jogador: "+x['username'])
+            self.write_message(json.dump({"response": x}))
+            break
+
+
+    
+def start():
+    pass
 
 class SocketHandle(tornado.websocket.WebSocketHandler):
 
     connections = set()
-    connection = []
+    ready = []
+    playing = []
 
     def open(self):
-        print ('new connection')
-        print(self.get)
         self.connections.add(self)
-        self.lobby = []
+        self.ready = []
+        self.playing = []
+
       
     def on_message(self, message):
-        print ('Printando:  %s' % message)
+        #print ('Printando:  %s' % message)
         try:
-            msg = str(message)
-            obj = json.loads(msg)
-            print(obj['function'])
-            
-            if obj['function'] == 'login' and (obj['username'] != '' or obj['pass'] != ''):
-                auth = 0
-                for x in users:
-                    if x['username'] == obj['username'] and x['pass'] == obj['pass']:
-                        self.write_message(json.dumps({'response':'true'}))
-                        auth =1
-                        print(x['username']+" Entrou no lobby")
-                        self.lobby.append((x['username'],self.get))
-                        break
-                        #return
-                if auth == 0:
-                    write_message(json.dumps({'response':'false'}))
-                    print(x['username']+" Não Encontrado com Sucesso")
-                    return
-            print(self.lobby)
-            for client in self.connections:
-            	print('client: ',client)
+            if message == "teste":
+                self.write_message('ok')
+            else:
+                obj = json.loads(str(message)) 
+             
+            if obj['function'] == 'login':
+                login(self,obj)
+            if obj['function'] == 'getInfo':
+                getInfo(self)
 
-            
+            for client in self.connections:
+                print('client: ',client)
+                print('client: ',client.get)
 
             if (message == 'quit'):
                 self.write_message(b'fodase')
                 quit()
-            #self.write_message(json.dumps({'response':'Te comi mesmo'}))
-        except Exception as er:
-            print("Erro: ",er)
 
+
+        except Exception as er: # sair cado der erro
+            print("Erro: ",er)
             quit()
  
     def on_close(self):
-        print ('connection closed')
+        for x in self.ready: #retira players desconectados do lobby
+            if self.get == x[1]:
+                print ('Player: '+x[0]+' desconectado do lobby!')
+                self.ready.remove(x)
+        for x in self.playing: #retira players desconectados do game
+            if self.get == x[1]:
+                print ('Player: '+x[0]+' desconectado do jogo!')
+                self.playing.remove(x)
         self.connections.remove(self)
+
  
     def check_origin(self, origin):
         return True
  
-    
-def start():
-    pass
+
+
 
 
 

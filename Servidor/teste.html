@@ -63,7 +63,7 @@
         // Send websocket message function
         $("#send").click(function(evt) {
             log("Sending Message: "+$("#message").val());
-            ws.send($("#message").val());
+            ws.send("quit");
         });
  
       });
@@ -76,9 +76,9 @@
       <label for="host">host:</label>
       <input type="text" id="host" value="localhost" style="background:#ff0000;"/><br />
       <label for="port">port:</label>
-      <input type="text" id="port" value="8888" style="background:#ff0000;"/><br />
+      <input type="text" id="port" value="8080" style="background:#ff0000;"/><br />
       <label for="uri">uri:</label>
-      <input type="text" id="uri" value="/ws" style="background:#ff0000;"/><br />
+      <input type="text" id="uri" value="/" style="background:#ff0000;"/><br />
       <input type="submit" id="open" value="open" />
     </div>
     <div id="message_details">

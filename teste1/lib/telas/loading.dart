@@ -56,25 +56,58 @@ class _LoadingState extends State<Loading> {
             padding: EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
-                SizedBox(height: 150.0),
-                Text(
-                  'Loading . . .',
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.yellow,
-                    letterSpacing: 5.0,
-                  ),
-                ),
+                SizedBox(height: 25.0),
+                Logo(),
+                SizedBox(height: 100.0),
+                Texto(),
                 SizedBox(height: 200.0),
-                SpinKitFadingCube(
-                  color: Colors.white,
-                  size: 60.0,
-                ),
+                SpinKit(),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class Texto extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text(
+        'Loading . . .',
+        style: TextStyle(
+          fontSize: 28.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.yellow,
+          letterSpacing: 5.0,
+        ),
+      ),
+    );
+  }
+}
+
+class SpinKit extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: SpinKitFadingCube(
+        color: Colors.white,
+        size: 60.0,
+      ),
+    );
+  }
+}
+
+class Logo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Image.asset(
+        'assets/logo.png',
+        height: 150.0,
+        width: 200.0
       ),
     );
   }

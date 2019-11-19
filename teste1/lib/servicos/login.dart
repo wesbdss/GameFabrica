@@ -33,8 +33,9 @@ class _LoginState extends State<Login> {
           login(false);
           return;      
         }
-      });
+      },);    
     });
+    dados['channel'].close();
   }
   
   void login(bool x) async {
@@ -43,7 +44,7 @@ class _LoginState extends State<Login> {
     //print("3: ${dados['credencial']}");
     if(x) {
       print('login succesful');
-      await instance.getInfo();
+      await instance.getInfo(dados['channel']);
       Map dados2 = {
         'nome': instance.nome,
         'vitoria': instance.vitoria,
@@ -83,13 +84,6 @@ class _LoginState extends State<Login> {
 
     String bgImage = 'fundo.jpg';
     Color bgColor = Colors.black;
-
-    // var encode = json.encode({"comi":"sua mae"});
-    // print(dados['channel'].sink.add(encode));
-    // dados['channel'].stream.listen((message) {
-    //   var decode = json.decode(message);
-    //   print(decode['response']);
-    // });
 
     return Scaffold(
       backgroundColor: bgColor,

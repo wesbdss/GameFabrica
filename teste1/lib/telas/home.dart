@@ -54,7 +54,7 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      dados['nome'],
+                      dados['nome'].toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20.0,

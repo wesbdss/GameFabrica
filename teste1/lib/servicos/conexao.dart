@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:web_socket_channel/io.dart';
 //import 'package:web_socket_channel/status.dart' as status;
 //import 'package:web_socket_channel/web_socket_channel.dart';
-
 
 class Conexao {
 
@@ -37,10 +38,33 @@ class Conexao {
   }
 
   // Função que vai retornar as informações da pessoa
-  Future<void> getInfo() async {
+  Future<void> getInfo(var channel) async {
     // Vai tentar conectar com o servidor
     try {           
       cont();
+      // channel.stream.listen((message){
+      //   var encode = json.encode({"function":"getinfo"});
+      //   channel.sink.add(encode);
+      //   var result = json.decode(message);
+      //   nome = result['response']['username'];
+      //   senha = result['response']['pass'];
+      //   vitoria = result['response']['vitoria'];
+      //   derrota = result['response']['derrota'];
+      //   pontos = result['response']['pontos'];
+      //   print('DENTRO!');
+      //   print(nome);
+      //   print(senha);
+      //   print(vitoria);
+      //   print(derrota);
+      //   print(pontos);
+      // });
+      // print('FORA!');
+      // print(nome);
+      // print(senha);
+      // print(vitoria);
+      // print(derrota);
+      // print(pontos);
+
       // Valores que o servidor vai retornar, por hora ficticios
       nome = 'allan';
       senha = 'allan';
@@ -61,7 +85,6 @@ class Conexao {
       channel = IOWebSocketChannel.connect('ws://192.168.0.101:8080');
     }catch(e){
       print(e);
-
     }
   }
 }

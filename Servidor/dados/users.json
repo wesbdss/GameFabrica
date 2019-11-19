@@ -1,14 +1,23 @@
 [
     {
         "username": "Allan",
-        "pass": "macaco"
+        "pass": "macaco",
+        "vitoria": 0,
+        "derrota": 0,
+        "pontos":0
     },
     {
         "username": "wey",
-        "pass": "wey"
+        "pass": "wey",
+        "vitoria": 0,
+        "derrota": 0,
+        "pontos": 0
     },
     {
         "username": "teste",
-        "pass": "teste"
+        "pass": "teste",
+        "vitoria": 0,
+        "derrota": 0,
+        "pontos": 0
     }
 ]
