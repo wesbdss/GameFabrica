@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
     
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
-    String bgImage = 'fundo.jpg';
+    String bgImage = 'home.jpg';
     Color bgColor = Colors.black; // isso põe cor na barra onde ficam os dados do celular
 
     return Scaffold(
@@ -41,15 +41,7 @@ class _HomeState extends State<Home> {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
-                Text(
-                  'dados',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0,
-                    color: Colors.red[900],
-                  ),
-                ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 222.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -57,22 +49,56 @@ class _HomeState extends State<Home> {
                       dados['nome'].toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20.0,
-                        color: Colors.red[900],
+                        fontSize: 24.0,
+                        color: Colors.yellow,
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20.0),
+                SizedBox(height: 25.0),
+                Text(
+                  //dados['vitoria'].toString(),
+                  '10',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                    color: Colors.yellow,
+                  ),
+                ),
+                SizedBox(height: 30.0),
+                Text(
+                  //dados['derrota'].toString(),
+                  '2',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                    color: Colors.yellow,
+                  ),
+                ),
+                SizedBox(height: 25.0),
                 Text(
                   dados['pontos'].toString(),
-                ),
-                SizedBox(height: 200.0),
-                RaisedButton(
-                  child: Text(
-                    'Jogar',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24.0,
+                    color: Colors.yellow,
                   ),
-                  onPressed: () {parear();},
+                ),
+                SizedBox(height: 40.0),
+                GestureDetector(
+                  child: Container(
+                    width: 300,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      image: DecorationImage(
+                        image:AssetImage("assets/search.png"), 
+                        fit:BoxFit.cover
+                      ),
+                    ),
+                  ),onTap:(){
+                    parear();
+                  }
                 ),
               ],
             ),

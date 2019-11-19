@@ -41,7 +41,6 @@ class _LoginState extends State<Login> {
   void login(bool x) async {
     Conexao instance = Conexao();
     dados['credencial'] = x;
-    //print("3: ${dados['credencial']}");
     if(x) {
       print('login succesful');
       await instance.getInfo(dados['channel']);
@@ -82,7 +81,7 @@ class _LoginState extends State<Login> {
 
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
-    String bgImage = 'fundo.jpg';
+    String bgImage = 'login.png';
     Color bgColor = Colors.black;
 
     return Scaffold(
@@ -99,27 +98,19 @@ class _LoginState extends State<Login> {
             padding: const EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
-                Text(
-                  'LOGIN',
-                  style: TextStyle(
-                    fontSize: 28.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.yellow,
-                  ),
-                ),
-                SizedBox(height: 50.0),
-                Text(
-                  'Username: ',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.yellow,
-                  ),
-                ),
-                SizedBox(width: 10.0),
+                SizedBox(height: 175.0),
                 TextField(
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.yellow,
+                      ),
+                    ),
+                    hintText: 'Usuário',
+                    hintStyle: TextStyle(
+                      color: Colors.yellow,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   style: TextStyle(
                     color: Colors.yellow,
@@ -128,18 +119,18 @@ class _LoginState extends State<Login> {
                   onChanged: (String valor) {inputUser(valor);},
                 ),
                 SizedBox(height: 50.0),
-                Text(
-                  'Senha: ',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.yellow,
-                  ),
-                ),
-                SizedBox(width: 50.0),
                 TextField(
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.yellow,
+                      ),
+                    ),
+                    hintText: 'Senha',
+                    hintStyle: TextStyle(
+                      color: Colors.yellow,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   style: TextStyle(
                     color: Colors.yellow,
@@ -147,9 +138,21 @@ class _LoginState extends State<Login> {
                   obscureText: true,
                   onChanged: (String valor) {inputPassword(valor);},
                 ),
-                RaisedButton(
-                  child: Text('Logar'),
-                  onPressed: () {checkCredential();},
+                SizedBox(height: 50.0),
+                GestureDetector(
+                  child: Container(
+                    width:120,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      image: DecorationImage(
+                        image:AssetImage("assets/entrar.png"), 
+                        fit:BoxFit.cover
+                      ),
+                    ),
+                  ),onTap:(){
+                    checkCredential();
+                  }
                 ),
               ],
             ),
