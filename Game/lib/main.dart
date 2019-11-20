@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'class/AppTeste.dart';
+import 'class/Socket.dart';
 
-void main() => runApp(Teste());
+void main() => runApp(MyApp1());
 
 
 
