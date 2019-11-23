@@ -28,7 +28,7 @@ with open('dados/users.json','r') as f: #pega os players do arquivo ou servidor
     users = json.load(f)
 
 
-def login(self,obj):
+def connect(self,obj): #mudar
     if obj['username'] != '' or obj['pass'] != '':
         auth = 0
         for x in users:
@@ -39,7 +39,7 @@ def login(self,obj):
                 self.ready.append((x['username'],self.get))
                 return
         if auth == 0: 
-            write_message(json.dumps({'response':'false'}))
+            self.write_message(json.dumps({'response':'false'}))
             #print(x['username']+" não conectou!")
             return
 
@@ -59,6 +59,7 @@ def getInfo(self):
     
 def start():
     pass
+
 
 class SocketHandle(tornado.websocket.WebSocketHandler):
 
@@ -80,16 +81,16 @@ class SocketHandle(tornado.websocket.WebSocketHandler):
             else:
                 obj = json.loads(str(message)) 
              
-            if obj['function'] == 'login':
-                login(self,obj)
-            if obj['function'] == 'getInfo':
-                getInfo(self)
+                if obj['function'] == 'connect':
+                    connect(self,obj)
+                if obj['function'] == 'getInfo':
+                    getInfo(self)
 
             for client in self.connections:
                 print('client: ',client)
                 print('client: ',client.get)
 
-            if (message == 'quit'):
+            if (message == 'quit' or message == 'exit'):
                 self.write_message(b'fodase')
                 quit()
 
@@ -112,7 +113,44 @@ class SocketHandle(tornado.websocket.WebSocketHandler):
  
     def check_origin(self, origin):
         return True
- 
+
+
+class WebHandle(tornado.web.RequestHandler):
+    def get(self):
+        self.write(b"Comi teu pai, get")
+
+    def post(self):
+        try:
+            body = self.request.body
+            print("Body >> ",body)
+            bodyjson = json.loads(body.decode('UTF-8'))
+            if bodyjson['function'] == 'login':
+                weblogin(self,bodyjson)
+            elif bodyjson['function'] == 'getInfo':
+                webgetInfo(self,bodyjson)
+        except Exception as er:
+            print("ERRO >> ",er)
+            exit()
+
+def weblogin(self,body):
+    print("Login Solicitado")
+    if body['username' != ''] and body['pass'] != '':
+        auth = 0
+        for x in users:
+            if x['username'] == body['username'] and body['pass'] == x['pass']:
+                auth = 1
+                print(x['username'], " Logou!!")
+                self.write(json.dumps({"response":"True"}))
+        if auth == 0:
+            print("Usuario: ",body['username'], " não encontrado")
+            self.write(json.dumps({"response":"False"}))
+
+def webgetInfo(self,body):
+    print("Informações Solicitado")
+    for user in users:
+        if user['username'] == body['username']:
+            print("Enviando Informações")
+            self.write(json.dumps({"vitoria":user['vitoria'],"derrota":user['derrota'],"pontos":user['pontos']}))
 
 
 
@@ -120,7 +158,7 @@ class SocketHandle(tornado.websocket.WebSocketHandler):
 
 def main():
     application = tornado.web.Application([
-        (r'/', SocketHandle),
+        (r'/ws', SocketHandle),(r'/', WebHandle),
     ])
     
     
