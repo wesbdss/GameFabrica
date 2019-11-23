@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+
+
 import 'package:web_socket_channel/io.dart';
 //import 'package:web_socket_channel/status.dart' as status;
 //import 'package:web_socket_channel/web_socket_channel.dart';
@@ -66,6 +69,13 @@ class Conexao {
       // print(pontos);
 
       // Valores que o servidor vai retornar, por hora ficticios
+      Future fetchPost() async {
+          final response = await http.post("http://192.168.0.109:8080/",
+          headers: {"Content-type": "application/json"},
+          body: json.encode({"function": "login"}));
+          final responseJson = json.decode(response.body);
+          print(responseJson['response']);
+      }
       nome = 'allan';
       senha = 'allan';
       vitoria = 1;

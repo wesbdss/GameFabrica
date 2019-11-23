@@ -14,7 +14,9 @@ class _LoginState extends State<Login> {
   String username = '', password = '';
   Map dados = {};
 
-  void checkCredential() async { 
+  MediaQueryData queryData;
+
+  void checkCredential() async {
     print('User: $username, Senha: $password');
     var encode = json.encode({"function":"login","username":"$username","pass":"$password"});
     dados['channel'].sink.add(encode);
