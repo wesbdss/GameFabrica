@@ -36,26 +36,21 @@ class SocketPlay(tornado.websocket.WebSocketHandler):
       
     def on_message(self, message):
         #print ('Printando:  %s' % message)
+        print("---> Entrando no webSocketPlay <---")
         try:
             if message == "teste":
                 self.write_message('ok')
             else:
                 obj = json.loads(str(message)) 
-             
-                if obj['function'] == 'listOn':
-                    listOn(self)
 
-            for client in self.connections:
-                print('client: ',client)
-                print('client: ',client.get)
-
+            print("---> Saindo no webSocketPlay <---")
             if (message == 'quit' or message == 'exit'):
                 self.write_message(b'fodase')
                 quit()
 
 
         except Exception as er: # sair cado der erro
-            print("Erro: ",er)
+            print("Erro (webSocketPlay) >> ",er)
             quit()
  
     def on_close(self):

@@ -9,16 +9,17 @@ class Jogo extends StatefulWidget {
 
 class _JogoState extends State<Jogo> {
 
-  String nome, msg;
+  String msg;
+  Map dados = {};
 
   void perdeu() {
     print('indo pra tela de derrota');
-    Navigator.pushReplacementNamed(context, '/derrota', arguments: nome);
+    Navigator.pushReplacementNamed(context, '/derrota', arguments: dados);
   }
 
   void ganhou() {
     print('indo pra tela de vitória');
-    Navigator.pushReplacementNamed(context, '/vitoria', arguments: nome);
+    Navigator.pushReplacementNamed(context, '/vitoria', arguments: dados);
   }
 
   void enviar() async {
@@ -44,7 +45,7 @@ class _JogoState extends State<Jogo> {
     String bgImage = 'fundo.jpg';
     Color bgColor = Colors.black;
 
-    nome = ModalRoute.of(context).settings.arguments;
+    dados = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -92,7 +93,7 @@ class _JogoState extends State<Jogo> {
                         color: Colors.yellow,
                       ),
                     ),
-                    hintText: 'Usuário',
+                    hintText: 'Digite o código',
                     hintStyle: TextStyle(
                       color: Colors.yellow,
                       fontWeight: FontWeight.bold,

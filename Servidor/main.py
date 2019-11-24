@@ -30,7 +30,7 @@ estrutura json:
 
 def main():
     application = tornado.web.Application([
-        (r'/ws', SocketHandle),(r'/', WebHandle),(r'/play',SocketPlay)
+        (r'/event', SocketHandle),(r'/', WebHandle),(r'/play',SocketPlay)
     ])
     
     

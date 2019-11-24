@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/status.dart' as status;
+import 'package:web_socket_channel/web_socket_channel.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -8,12 +14,24 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  Map dados = {};
-
-  void parear() {
-    Navigator.pushReplacementNamed(context, '/pareamento', arguments: dados);
+  static Map dados = {};
+  Map concat = {};
+  WebSocketChannel channel = IOWebSocketChannel.connect('ws://192.168.0.102:8080/event');//PARAMOS AQUI
+  var x = json.encode({"username": dados['nome'],"function":"firstin"});
+  
+  Future<void> connect() async {
+    print('home. Entrou');
+    channel.sink.add(x);
+    Map connection = {'channel': channel};
+    concat = {}..addAll(dados)..addAll(connection);
   }
 
+  void parear() async {
+    await connect();
+    Navigator.pushReplacementNamed(context, '/oponentes', arguments: concat);
+  }
+  
+  
   @override
   Widget build(BuildContext context) {
     
@@ -23,6 +41,8 @@ class _HomeState extends State<Home> {
     ]);
     
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
+
+    print(dados['nome']);
 
     String bgImage = 'home.jpg';
     Color bgColor = Colors.black; // isso põe cor na barra onde ficam os dados do celular

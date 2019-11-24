@@ -9,8 +9,6 @@ class Derrota extends StatefulWidget {
 
 class _DerrotaState extends State<Derrota> {
 
-  String nome;
-
   void voltarHome() {
     print('voltando pra tela home');
     Navigator.pushReplacementNamed(context, '/home', arguments: dados);
@@ -18,7 +16,8 @@ class _DerrotaState extends State<Derrota> {
 
   Conexao instance = Conexao();
 
-  void getDados(String nome) async {
+  void getDados(Map data) async {
+    String nome = data ['nome'];
     await instance.getInfo(nome);
     dados = {
       'nome': instance.nome,
@@ -38,9 +37,9 @@ class _DerrotaState extends State<Derrota> {
         DeviceOrientation.portraitDown,
     ]);
         
-    nome = ModalRoute.of(context).settings.arguments;
+    dados = ModalRoute.of(context).settings.arguments;
 
-    getDados(nome);
+    getDados(dados);
 
     String bgImage = 'fundoLoss.jpg';
     Color bgColor = Colors.black;

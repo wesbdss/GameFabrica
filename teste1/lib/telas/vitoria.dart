@@ -9,8 +9,6 @@ class Vitoria extends StatefulWidget {
 
 class _VitoriaState extends State<Vitoria> {
 
-  String nome;
-
   void voltarHome() {
     print('voltando pra tela home');
     Navigator.pushReplacementNamed(context, '/home', arguments: dados);
@@ -18,7 +16,8 @@ class _VitoriaState extends State<Vitoria> {
 
   Conexao instance = Conexao();
 
-  void getDados(String nome) async {
+  void getDados(Map data) async {
+    String nome = data['nome'];
     await instance.getInfo(nome);
     dados = {
       'nome': instance.nome,
@@ -38,9 +37,9 @@ class _VitoriaState extends State<Vitoria> {
         DeviceOrientation.portraitDown,
     ]);
 
-    nome = ModalRoute.of(context).settings.arguments;
+    dados = ModalRoute.of(context).settings.arguments;
 
-    getDados(nome);
+    getDados(dados);
 
     String bgImage = 'fundoWin.jpg';
     Color bgColor = Colors.black;

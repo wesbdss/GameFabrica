@@ -1,25 +1,28 @@
-import json
-import sys
-import tornado.httpserver
-import tornado.websocket
-import tornado.ioloop
-import tornado.web
-import socket
+self, message):
+        #print ('Printando:  %s' % message)
+        print("---> Entrando no webSocketEvent <---")
+        try:
+            if message == "teste":
+                self.write_message('ok')
+            else:
+                obj = json.loads(str(message)) 
+                
+                checkConnection(self,obj['username'])
 
-"""
---------------------------------
-        INICIO   Funções Socket
---------------------------------
+                if obj['function'] == 'listOn':
+                    listOn(self)
 
-"""
-def listOn(self):
-    pass
+            for client in self.ready:
+                print('client >> ',client)
+            
+            print("---> Saindo no webSocketEvent <---")
+            if (message == 'quit' or message == 'exit'):
+                self.write_message(b'fodase')
+                quit()
 
 
-"""
---------------------------------
-        FIM     Funções Socket
---------------------------------
+        except Exception as er: # sair cado der erro
+            print("Erro (webSocketEvent) >> ",er)
 
 """
 
@@ -37,26 +40,29 @@ class SocketHandle(tornado.websocket.WebSocketHandler):
       
     def on_message(self, message):
         #print ('Printando:  %s' % message)
+        print("---> Entrando no webSocketEvent <---")
         try:
             if message == "teste":
                 self.write_message('ok')
             else:
                 obj = json.loads(str(message)) 
-             
+                
+                checkConnection(self,obj['username'])
+
                 if obj['function'] == 'listOn':
                     listOn(self)
 
-            for client in self.connections:
-                print('client: ',client)
-                print('client: ',client.get)
-
+            for client in self.ready:
+                print('client >> ',client)
+            
+            print("---> Saindo no webSocketEvent <---")
             if (message == 'quit' or message == 'exit'):
                 self.write_message(b'fodase')
                 quit()
 
 
         except Exception as er: # sair cado der erro
-            print("Erro: ",er)
+            print("Erro (webSocketEvent) >> ",er)
             quit()
  
     def on_close(self):

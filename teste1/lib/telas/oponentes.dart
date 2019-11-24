@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:teste1/servicos/conexao.dart';
+
 
 class Oponentes extends StatefulWidget {
   @override
@@ -8,13 +10,33 @@ class Oponentes extends StatefulWidget {
 
 class _OponentesState extends State<Oponentes> {
 
+  Map dados = {};
   Map op = {};
-  var trocar = 0;
+  Map concat = {};
   String nome;
 
   void jogar() {
-    nome = op['nome'].toString();
-    Navigator.pushReplacementNamed(context, '/jogo', arguments: nome);
+    //nome = op['nome'].toString();
+    Navigator.pushReplacementNamed(context, '/jogo', arguments: concat);
+  }
+
+  void parear () async {
+    Conexao instance = Conexao();
+    await instance.getInfoInimigo();
+    op = {
+      'nomesOp': instance.nomesOp,
+      'pontosOp': instance.pontosOp,
+      'vitoriasOp': instance.vitoriasOp,
+      'derrotasOp': instance.derrotasOp,
+    };
+    Map dados2 = {'nome': dados['nome'], 'connection': dados['channel']};
+    concat = {}..addAll(op)..addAll(dados2);
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    parear();
   }
 
   @override
@@ -25,7 +47,10 @@ class _OponentesState extends State<Oponentes> {
         DeviceOrientation.portraitDown,
     ]);
 
-    op = op.isNotEmpty ? op : ModalRoute.of(context).settings.arguments;
+    dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
+
+    print("op: " + dados['channel']);
+    print(dados);
 
     String bgImage = 'fundo.jpg';
     Color bgColor = Colors.black;
