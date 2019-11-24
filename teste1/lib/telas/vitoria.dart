@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:teste1/servicos/conexao.dart';
 
 class Vitoria extends StatefulWidget {
   @override
@@ -8,9 +9,23 @@ class Vitoria extends StatefulWidget {
 
 class _VitoriaState extends State<Vitoria> {
 
+  String nome;
+
   void voltarHome() {
     print('voltando pra tela home');
     Navigator.pushReplacementNamed(context, '/home', arguments: dados);
+  }
+
+  Conexao instance = Conexao();
+
+  void getDados(String nome) async {
+    await instance.getInfo(nome);
+    dados = {
+      'nome': instance.nome,
+      'vitoria': instance.vitoria,
+      'derrota': instance.derrota,
+      'pontos': instance.pontos,
+    };
   }
 
   Map dados = {};
@@ -23,10 +38,11 @@ class _VitoriaState extends State<Vitoria> {
         DeviceOrientation.portraitDown,
     ]);
 
-    dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
+    nome = ModalRoute.of(context).settings.arguments;
+
+    getDados(nome);
 
     String bgImage = 'fundoWin.jpg';
-    //String imgTrophy = 'trophyWin.png';
     Color bgColor = Colors.black;
 
     return Scaffold(

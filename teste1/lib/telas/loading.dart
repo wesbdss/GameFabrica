@@ -17,11 +17,11 @@ class _LoadingState extends State<Loading> {
   
 
   void setupApp() async {
-    Conexao instance = Conexao();
     //await instance.getInfo();
-    await instance.connect();
+    Conexao instance = Conexao();
+    await instance.roleplay();
     Navigator.pushReplacementNamed(context, '/login', arguments: {
-      'channel': instance.channel,
+      'nome': 'a',
     });
   }
 

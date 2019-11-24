@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:teste1/servicos/conexao.dart';
 
 class Jogo extends StatefulWidget {
   @override
@@ -8,16 +9,27 @@ class Jogo extends StatefulWidget {
 
 class _JogoState extends State<Jogo> {
 
-  Map dados = {};
+  String nome, msg;
 
   void perdeu() {
     print('indo pra tela de derrota');
-    Navigator.pushReplacementNamed(context, '/derrota', arguments: dados);
+    Navigator.pushReplacementNamed(context, '/derrota', arguments: nome);
   }
 
   void ganhou() {
     print('indo pra tela de vitória');
-    Navigator.pushReplacementNamed(context, '/vitoria', arguments: dados);
+    Navigator.pushReplacementNamed(context, '/vitoria', arguments: nome);
+  }
+
+  void enviar() async {
+    Conexao instance = Conexao();
+    await instance.enviando(msg);
+  }
+
+  void inputMsg(String valor) {
+    setState(() {
+      msg = valor;
+    });
   }
 
   @override
@@ -28,10 +40,11 @@ class _JogoState extends State<Jogo> {
         DeviceOrientation.portraitDown,
     ]);
 
-    dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
     String bgImage = 'fundo.jpg';
     Color bgColor = Colors.black;
+
+    nome = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
       backgroundColor: bgColor,
@@ -72,6 +85,30 @@ class _JogoState extends State<Jogo> {
                   child: Text('perdi'),
                   onPressed: () {perdeu();},
                 ),
+                TextField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Colors.yellow,
+                      ),
+                    ),
+                    hintText: 'Usuário',
+                    hintStyle: TextStyle(
+                      color: Colors.yellow,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  style: TextStyle(
+                    color: Colors.yellow,
+                  ),
+                  autocorrect: false,
+                  onChanged: (String valor) {inputMsg(valor);},
+                ),
+                SizedBox(height: 35.0),
+                RaisedButton(
+                  child: Text('OK'),
+                  onPressed: () {enviar();},
+                )
               ],
             ),
           ),

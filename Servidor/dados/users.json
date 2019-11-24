@@ -2,16 +2,16 @@
     {
         "username": "Allan",
         "pass": "macaco",
-        "vitoria": 0,
-        "derrota": 0,
-        "pontos":0
+        "vitoria": 3,
+        "derrota": 2,
+        "pontos":6
     },
     {
         "username": "wey",
         "pass": "wey",
-        "vitoria": 0,
-        "derrota": 0,
-        "pontos": 0
+        "vitoria": 4,
+        "derrota": 2,
+        "pontos": 98
     },
     {
         "username": "teste",

@@ -1,9 +1,8 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:http/http.dart' as http;
 
-
-import 'package:web_socket_channel/io.dart';
 //import 'package:web_socket_channel/status.dart' as status;
 //import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -12,11 +11,12 @@ class Conexao {
   /*
     credencial vai ser true se o nome e a senha forem válidos, false se for o contrário.
   */
-  var channel;
   String nome, senha, situacao;
-  int vitoria, derrota, pontos;
-  double ratio;
+  var vitoria, derrota, pontos;
   bool credencial;
+
+  List<String> nomesOp;
+  List<int> pontosOp, vitoriasOp, derrotasOp;
 
   Conexao();
 
@@ -32,6 +32,22 @@ class Conexao {
   Future<void> getInfoInimigo() async {
     try {           
       cont();
+      // final response = await http.post("http://192.168.0.102:8080/",
+      // headers: {"Content-type": "application/json"},
+      // body: json.encode({"function": "getInfo"}));
+      // final responseJson = json.decode(response.body);
+
+      // Valores que o servidor vai retornar
+      // print("Pegou os valores: ${responseJson['nomesOp']}");
+      // nomesOp = responseJson['nomesOp'];
+      // vitoriasOp = responseJson['vitoriasOp'];
+      // derrotasOp = responseJson['derrotasOp'];
+      // pontosOp = responseJson['pontosOp'];
+
+      nomesOp = ['a'];
+      vitoriasOp = [1];
+      derrotasOp = [0];
+      pontosOp = [45];
     }
     catch (e) {
       //Se não conseguir conectar vai imprimir um erro pro user
@@ -41,47 +57,23 @@ class Conexao {
   }
 
   // Função que vai retornar as informações da pessoa
-  Future<void> getInfo(var channel) async {
+  Future<void> getInfo(String username) async {
     // Vai tentar conectar com o servidor
     try {           
       cont();
-      // channel.stream.listen((message){
-      //   var encode = json.encode({"function":"getinfo"});
-      //   channel.sink.add(encode);
-      //   var result = json.decode(message);
-      //   nome = result['response']['username'];
-      //   senha = result['response']['pass'];
-      //   vitoria = result['response']['vitoria'];
-      //   derrota = result['response']['derrota'];
-      //   pontos = result['response']['pontos'];
-      //   print('DENTRO!');
-      //   print(nome);
-      //   print(senha);
-      //   print(vitoria);
-      //   print(derrota);
-      //   print(pontos);
-      // });
-      // print('FORA!');
-      // print(nome);
-      // print(senha);
-      // print(vitoria);
-      // print(derrota);
-      // print(pontos);
+      
+      final response = await http.post("http://192.168.0.102:8080/",
+      headers: {"Content-type": "application/json"},
+      body: json.encode({"function": "getInfo","username":"$username"}));
+      final responseJson = json.decode(response.body);
+      //print(responseJson['response']);
 
-      // Valores que o servidor vai retornar, por hora ficticios
-      Future fetchPost() async {
-          final response = await http.post("http://192.168.0.109:8080/",
-          headers: {"Content-type": "application/json"},
-          body: json.encode({"function": "login"}));
-          final responseJson = json.decode(response.body);
-          print(responseJson['response']);
-      }
-      nome = 'allan';
-      senha = 'allan';
-      vitoria = 1;
-      derrota = 1;
-      pontos = 10;
-      ratio = 1.0;
+      // Valores que o servidor vai retornar
+      print("Pegou os valores: ${responseJson['vitoria']}");
+      nome = username;
+      vitoria = responseJson['vitoria'];
+      derrota = responseJson['derrota'];
+      pontos = responseJson['pontos'];
     }
     catch (e) {
       //Se não conseguir conectar vai imprimir um erro pro user
@@ -90,11 +82,19 @@ class Conexao {
     }
   }
 
-  Future<void> connect() async{
-    try{
-      channel = IOWebSocketChannel.connect('ws://192.168.0.101:8080');
-    }catch(e){
-      print(e);
-    }
+  Future<void> roleplay() async {
+    cont();
+    print('conectado');
   }
+
+  Future<void> enviando(String msg) async {
+
+  }
+  // Future<void> connect() async{
+  //   try{
+  //     channel = IOWebSocketChannel.connect('ws://192.168.0.102:8080');
+  //   }catch(e){
+  //     print(e);
+  //   }
+  // }
 }

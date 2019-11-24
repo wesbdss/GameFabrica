@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:teste1/servicos/conexao.dart';
 
 class Derrota extends StatefulWidget {
   @override
@@ -8,9 +9,23 @@ class Derrota extends StatefulWidget {
 
 class _DerrotaState extends State<Derrota> {
 
+  String nome;
+
   void voltarHome() {
     print('voltando pra tela home');
     Navigator.pushReplacementNamed(context, '/home', arguments: dados);
+  }
+
+  Conexao instance = Conexao();
+
+  void getDados(String nome) async {
+    await instance.getInfo(nome);
+    dados = {
+      'nome': instance.nome,
+      'vitoria': instance.vitoria,
+      'derrota': instance.derrota,
+      'pontos': instance.pontos,
+    };
   }
 
   Map dados = {};
@@ -23,7 +38,9 @@ class _DerrotaState extends State<Derrota> {
         DeviceOrientation.portraitDown,
     ]);
         
-    dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
+    nome = ModalRoute.of(context).settings.arguments;
+
+    getDados(nome);
 
     String bgImage = 'fundoLoss.jpg';
     Color bgColor = Colors.black;

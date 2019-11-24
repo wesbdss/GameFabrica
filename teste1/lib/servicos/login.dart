@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:teste1/servicos/conexao.dart';
 import 'dart:convert';
+import 'dart:core';
+import 'package:http/http.dart' as http;
+
 
 class Login extends StatefulWidget {
-  String credencial = 'false';
   @override
   _LoginState createState() => _LoginState();
 }
@@ -13,49 +15,46 @@ class _LoginState extends State<Login> {
 
   String username = '', password = '';
   Map dados = {};
+  var entrou = 0;
 
   MediaQueryData queryData;
 
   void checkCredential() async {
     print('User: $username, Senha: $password');
-    var encode = json.encode({"function":"login","username":"$username","pass":"$password"});
-    dados['channel'].sink.add(encode);
-    dados['channel'].stream.listen((message) {
-      var result = json.decode(message);
-      print(result);
-      setState(() {
-        if (result['response'] == 'true'){
-          dados['credencial']= 'true';
-          widget.credencial = 'true';
-          login(true);
-          return;
-        } else {
-          dados['credencial']= 'false';
-          widget.credencial = 'false';
-          login(false);
-          return;      
-        }
-      },);    
-    });
-    dados['channel'].close();
+    final response = await http.post("http://192.168.0.102:8080/", // Tem que mudar toda vez OMEGALUL
+    headers: {"Content-type": "application/json"},
+    body: json.encode({"function": "login","username":"$username","pass":"$password"}));
+    final responseJson = json.decode(response.body);
+    print(responseJson['response'].toString());
+    print(responseJson);
+    //dados['credencial'] = false;
+    if ((responseJson.toString()) == '{response: True}'){
+      print("entrou");
+      entrou = 1;
+    }
+    login();
   }
   
-  void login(bool x) async {
+    /*
+    User: wey, Senha: wey
+    True
+    {response: True}
+    Unhandled Exception: type 'bool' is not a subtype of type 'String' of 'value'
+    */
+
+  void login() async {
     Conexao instance = Conexao();
-    dados['credencial'] = x;
-    if(x) {
+    print("LOGIN");
+    if(entrou == 1) {
       print('login succesful');
-      await instance.getInfo(dados['channel']);
-      Map dados2 = {
+      await instance.getInfo(username);
+      dados = {
         'nome': instance.nome,
         'vitoria': instance.vitoria,
         'derrota': instance.derrota,
-        'ratio': instance.ratio,
         'pontos': instance.pontos,
-        'credencial': instance.credencial,
       };
-      Map concat = {}..addAll(dados2)..addAll(dados);
-      Navigator.pushReplacementNamed(context, '/home', arguments: concat);
+      Navigator.pushReplacementNamed(context, '/home', arguments: dados);
     } else {
       print('login fail');
     }

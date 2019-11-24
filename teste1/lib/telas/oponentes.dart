@@ -8,10 +8,13 @@ class Oponentes extends StatefulWidget {
 
 class _OponentesState extends State<Oponentes> {
 
-  Map dados = {};
+  Map op = {};
+  var trocar = 0;
+  String nome;
 
   void jogar() {
-    Navigator.pushReplacementNamed(context, '/jogo', arguments: dados);
+    nome = op['nome'].toString();
+    Navigator.pushReplacementNamed(context, '/jogo', arguments: nome);
   }
 
   @override
@@ -22,11 +25,12 @@ class _OponentesState extends State<Oponentes> {
         DeviceOrientation.portraitDown,
     ]);
 
-    dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
+    op = op.isNotEmpty ? op : ModalRoute.of(context).settings.arguments;
 
     String bgImage = 'fundo.jpg';
     Color bgColor = Colors.black;
 
+    //op = op.isNotEmpty ? op : ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: bgColor,
       body: SafeArea(

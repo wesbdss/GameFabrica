@@ -57,8 +57,8 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 25.0),
                 Text(
-                  //dados['vitoria'].toString(),
-                  '10',
+                  dados['vitoria'].toString(),
+                  //'10',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24.0,
@@ -67,8 +67,8 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 30.0),
                 Text(
-                  //dados['derrota'].toString(),
-                  '2',
+                  dados['derrota'].toString(),
+                  //'2',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24.0,

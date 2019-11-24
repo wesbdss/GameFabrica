@@ -11,11 +11,20 @@ class Pareamento extends StatefulWidget {
 class _PareamentoState extends State<Pareamento> {
 
   Map dados = {};
+  Map op = {};
 
   void parear () async {
     Conexao instance = Conexao();
     await instance.getInfoInimigo();
-    Navigator.pushReplacementNamed(context, '/oponentes', arguments: dados);
+    op = {
+      'nomesOp': instance.nomesOp,
+      'pontosOp': instance.pontosOp,
+      'vitoriasOp': instance.vitoriasOp,
+      'derrotasOp': instance.derrotasOp,
+    };
+    Map name = {'nome': dados['nome']};
+    Map concat = {}..addAll(op)..addAll(name);
+    Navigator.pushReplacementNamed(context, '/oponentes', arguments: concat);
   }
 
   @override
