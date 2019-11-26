@@ -1,11 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
 import 'package:web_socket_channel/web_socket_channel.dart';
-
 
 class Home extends StatefulWidget {
   @override
@@ -15,22 +13,42 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   static Map dados = {};
-  Map concat = {};
-  WebSocketChannel channel = IOWebSocketChannel.connect('ws://192.168.0.102:8080/event');//PARAMOS AQUI
+  Map dadosOp = {};
+ 
   var x = json.encode({"username": dados['nome'],"function":"firstin"});
   
   Future<void> connect() async {
     print('home. Entrou');
-    channel.sink.add(x);
-    Map connection = {'channel': channel};
-    concat = {}..addAll(dados)..addAll(connection);
   }
 
   void parear() async {
-    await connect();
-    Navigator.pushReplacementNamed(context, '/oponentes', arguments: concat);
-  }
-  
+    //desativar botao aqui !!
+    print("(Home) -> Conectando com servidor");
+    WebSocketChannel channel = IOWebSocketChannel.connect('ws://192.168.0.100:8080/event');
+    channel.sink.add(json.encode({"function":"jogar","username": "${dados['nome']}"}));
+    print("(Home) -> Procurando Oponente");
+    channel.stream.listen((message) {
+      var result = json.decode(message);
+      if (result['response'] == "encontrado"){
+        dadosOp = {
+          'nomeOp': result['nome'],
+          'pontosOp': result['pontos'],
+          'vitoriasOp': result['vitorias'],
+          'derrotasOp': result['derrotas'],
+        };
+        print("OPONENTE ENCONTRADO -> ${dadosOp['nomeOp']}");
+        WebSocketChannel channel2 = IOWebSocketChannel.connect('ws://192.168.0.100:8080/event');
+        channel2.sink.add(json.encode({"function":"ingame","username": "${dados['nome']}","nomeOP":"${dadosOp['nomeOp']}"}));
+        Map channelM = {
+          'channel': channel2,
+        };
+        Map concat = {}..addAll(dados)..addAll(dadosOp)..addAll(channelM);
+        Navigator.pushReplacementNamed(context, '/jogo', arguments: concat);
+        channel.sink.close(status.goingAway);
+      }
+    });
+    await connect();    
+  }  
   
   @override
   Widget build(BuildContext context) {
@@ -72,7 +90,7 @@ class _HomeState extends State<Home> {
                         fontSize: 24.0,
                         color: Colors.yellow,
                       ),
-                    ),
+                    )
                   ],
                 ),
                 SizedBox(height: 25.0),
