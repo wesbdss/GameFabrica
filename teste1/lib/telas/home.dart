@@ -24,7 +24,7 @@ class _HomeState extends State<Home> {
   void parear() async {
     //desativar botao aqui !!
     print("(Home) -> Conectando com servidor");
-    WebSocketChannel channel = IOWebSocketChannel.connect('ws://192.168.0.100:8080/event');
+    WebSocketChannel channel = IOWebSocketChannel.connect('ws://192.168.0.101:8080/event');
     channel.sink.add(json.encode({"function":"jogar","username": "${dados['nome']}"}));
     print("(Home) -> Procurando Oponente");
     channel.stream.listen((message) {
@@ -37,7 +37,7 @@ class _HomeState extends State<Home> {
           'derrotasOp': result['derrotas'],
         };
         print("OPONENTE ENCONTRADO -> ${dadosOp['nomeOp']}");
-        WebSocketChannel channel2 = IOWebSocketChannel.connect('ws://192.168.0.100:8080/event');
+        WebSocketChannel channel2 = IOWebSocketChannel.connect('ws://192.168.0.101:8080/event');
         channel2.sink.add(json.encode({"function":"ingame","username": "${dados['nome']}","nomeOP":"${dadosOp['nomeOp']}"}));
         Map channelM = {
           'channel': channel2,
