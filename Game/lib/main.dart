@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'class/AppTeste.dart';
-import 'class/Socket.dart';
+//import 'class/Socket.dart';
+import 'class/App1.dart';
 
 void main() => runApp(MyApp1());
 
@@ -24,13 +24,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.red,
       ),
-      //home: MyHomePage(title: 'Testing Flutter'),
-      routes: <String,WidgetBuilder>{
-      '/': (BuildContext context)=> 
-        new MyHomePage(title: 'Flutter Demo Home Page',),
-      '/class/AppTeste': (BuildContext context) =>
-        new MyTestePage(title: 'pingulino')
-    }
+      home: MyHomePage(title: 'Testing Flutter'),
     );
   }
 }

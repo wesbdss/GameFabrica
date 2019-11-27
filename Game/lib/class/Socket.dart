@@ -13,7 +13,7 @@ class MyApp1 extends StatelessWidget {
       title: title,
       home: MyHomePage(
         title: title,
-        channel: IOWebSocketChannel.connect('ws://192.168.0.101:8080'),
+        channel: IOWebSocketChannel.connect('ws://192.168.0.109:8080'),
       ),
     );
   }
@@ -32,6 +32,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController _controller = TextEditingController();
+  TextEditingController _controller1 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +45,25 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            StreamBuilder(
+              stream: widget.channel.stream,
+              builder: (context, snapshot) {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
+                  child: Text(snapshot.hasData ? '${snapshot.data}' : ''),
+                );
+              },
+            ),
             Form(
               child: TextFormField(
                 controller: _controller,
                 decoration: InputDecoration(labelText: 'Send a message'),
+              ),
+            ),
+            Form(
+              child: TextFormField(
+                controller: _controller1,
+                decoration: InputDecoration(labelText: 'Clica aqui viado'),
               ),
             ),
             StreamBuilder(
@@ -63,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _sendMessage,
+        onPressed: (){_sendMessage();_sendMessage1();},
         tooltip: 'Send message',
         child: Icon(Icons.send),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -73,6 +89,11 @@ class _MyHomePageState extends State<MyHomePage> {
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
       widget.channel.sink.add(_controller.text);
+    }
+  }
+  void _sendMessage1() {
+    if (_controller1.text.isNotEmpty) {
+      widget.channel.sink.add(_controller1.text);
     }
   }
 

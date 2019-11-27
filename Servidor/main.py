@@ -6,7 +6,6 @@ import tornado.ioloop
 import tornado.web
 import socket
 sys.path.insert(1, './Servidores/')
-from webSocketEvent import SocketHandle
 from webSocketPlay import SocketPlay
 from webService import WebHandle
 
@@ -30,8 +29,7 @@ estrutura json:
 
 def main():
     application = tornado.web.Application([
-        (r'/event', SocketHandle),(r'/', WebHandle),(r'/play',SocketPlay)
-    ])
+        (r'/event', SocketPlay),(r'/', WebHandle)])
     
     
     if __name__ == "__main__":
