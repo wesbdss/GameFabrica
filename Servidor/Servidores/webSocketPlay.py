@@ -40,10 +40,11 @@ def buscarDados(nome):
             return user['vitoria'],user['derrota'],user['pontos']
     return 0
 
-def codePoints(nome,self):
+def codePoints(nome,code,self):
     #enviar os pontos tag response : end
     #trabalhar em como setar os pontos
-    self.write_message(json.dumps({"response":"5"}))
+    qtd = len(code)
+    self.write_message(json.dumps({"response":"fim","pontos":qtd}))
     pass
 
 
@@ -92,7 +93,7 @@ class SocketPlay(tornado.websocket.WebSocketHandler):
                 elif obj['function'] == 'end':
                     if (obj['username'],self) in self.playing:
                         self.playing.remove((obj['username'],self))
-                        codePoints(obj['username'],self)
+                        codePoints(obj['username'],obj['code'],self)
                         return 0 #fim do jogo
 
 
