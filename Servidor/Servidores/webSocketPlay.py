@@ -44,7 +44,7 @@ def codePoints(nome,code,self):
     #enviar os pontos tag response : end
     #trabalhar em como setar os pontos
     qtd = len(code)
-    self.write_message(json.dumps({"response":"fim","pontos":qtd}))
+    self.write_message(json.dumps({"response":"fim","pontos":qtd,"status":"1"}))
     pass
 
 
@@ -77,17 +77,20 @@ class SocketPlay(tornado.websocket.WebSocketHandler):
                 self.write_message('ok')
             else:
                 obj = json.loads(str(message)) 
-
+                
+                print("Json: >> ",obj)
                 if ((obj['username'],self) not in self.ready) and ((obj['username'],self) not in self.playing): #adiciona novos players
-                    self.ready.append((message['username'],self))
+                    self.ready.append((obj['username'],self))
 
                 """
                     Funções de Ação do Game
                 """
                 if obj['function'] == 'jogar':
+                    print("Jogador ",obj['username']," está querendo jogar!")
                     find(self,obj) #encontrar jogadores
                 elif obj['function'] == 'ingame':
                     if ((obj['username'],self) in self.ready) and ((obj['username'],self) not in self.playing):
+                        print("Jogador ",obj['username']," entrou no jogo!")
                         self.ready.remove((obj['username'],self))
                         self.playing.append((obj['username'],self))
                 elif obj['function'] == 'end':

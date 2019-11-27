@@ -44,9 +44,9 @@ class _LoginState extends State<Login> {
 
   void login() async {
     Conexao instance = Conexao();
-    print("LOGIN");
+    //print("LOGIN");
     if(entrou == 1) {
-      print('login succesful');
+      print('login successful');
       await instance.getInfo(username);
       dados = {
         'nome': instance.nome,

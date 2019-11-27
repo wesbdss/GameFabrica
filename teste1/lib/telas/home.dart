@@ -17,15 +17,11 @@ class _HomeState extends State<Home> {
  
   var x = json.encode({"username": dados['nome'],"function":"firstin"});
   
-  Future<void> connect() async {
-    print('home. Entrou');
-  }
-
   void parear() async {
     //desativar botao aqui !!
     print("(Home) -> Conectando com servidor");
     WebSocketChannel channel = IOWebSocketChannel.connect('ws://192.168.0.101:8080/event');
-    channel.sink.add(json.encode({"function":"jogar","username": "${dados['nome']}"}));
+    channel.sink.add(json.encode({"function":"jogar","username": dados['nome']}));
     print("(Home) -> Procurando Oponente");
     channel.stream.listen((message) {
       var result = json.decode(message);
@@ -36,7 +32,7 @@ class _HomeState extends State<Home> {
           'vitoriasOp': result['vitorias'],
           'derrotasOp': result['derrotas'],
         };
-        print("OPONENTE ENCONTRADO -> ${dadosOp['nomeOp']}");
+        print("OPONENTE ENCONTRADO -> ${result['nome']}");
         WebSocketChannel channel2 = IOWebSocketChannel.connect('ws://192.168.0.101:8080/event');
         channel2.sink.add(json.encode({"function":"ingame","username": "${dados['nome']}","nomeOP":"${dadosOp['nomeOp']}"}));
         Map channelM = {
@@ -46,8 +42,7 @@ class _HomeState extends State<Home> {
         Navigator.pushReplacementNamed(context, '/jogo', arguments: concat);
         channel.sink.close(status.goingAway);
       }
-    });
-    await connect();    
+    });  
   }  
   
   @override
@@ -60,7 +55,7 @@ class _HomeState extends State<Home> {
     
     dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
 
-    print(dados['nome']);
+    //print(dados['nome']);
 
     String bgImage = 'home.jpg';
     Color bgColor = Colors.black; // isso põe cor na barra onde ficam os dados do celular
