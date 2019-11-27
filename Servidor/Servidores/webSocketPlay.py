@@ -43,6 +43,7 @@ def buscarDados(nome):
 def codePoints(nome,self):
     #enviar os pontos tag response : end
     #trabalhar em como setar os pontos
+    self.write_message(json.dumps({"response":"5"}))
     pass
 
 
