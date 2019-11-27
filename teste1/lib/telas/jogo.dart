@@ -1,11 +1,7 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:teste1/servicos/conexao.dart';
-import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/status.dart' as status;
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 class Jogo extends StatefulWidget {
   @override
@@ -33,13 +29,8 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
     Navigator.pushReplacementNamed(context, '/vitoria', arguments: concat);
   }
 
-  void enviar() async {
-    lista += [msg];
-    print(lista);
-  }
-
   void encerrar(){
-    dados['channel'].sink.add(json.encode({"function": "end", "lista": lista}));
+    dados['channel'].sink.add(json.encode({"function": "end", "code": lista.toString(), "username": dados['nome']}));
     dados['channel'].stream.listen((message){
       var result = json.decode(message);
       if (result['response'] == "ok"){
@@ -49,26 +40,21 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
         Map pontosResult = {};
         if (result['status'] == "1"){
           pontosResult = {
-            
+            'pontosR': '1'
           };
           concat = {}..addAll(dados)..addAll(pontosResult);
           ganhou();
+          dados['channel'].sink.close(status.goingAway);
         }
         if (result['status'] == "0"){
           pontosResult = {
-            
+            'pontosR': '1'
           };
           concat = {}..addAll(dados)..addAll(pontosResult);
           perdeu();
+          dados['channel'].sink.close(status.goingAway);
         }
-        dados['channel'].sink.close(status.goingAway);
       }
-    });
-  }
-
-  void inputMsg(String valor) {
-    setState(() {
-      msg = valor;
     });
   }
 
@@ -85,7 +71,7 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
       ),
     );
     setState(() {
-      lcode.insert(0, codigo);
+      lcode.insert(0, codigo);      
     });
     codigo.animationController.forward();
   }
@@ -105,6 +91,9 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
           Flexible(
             child: TextField(
               controller: tedit,
+              style: TextStyle(
+                color: Colors.yellow,
+              ),
               onChanged: (String text) {
                 setState(() {
                   isComposing = text.length > 0;
@@ -115,7 +104,7 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
                 hintText: 'Digite o código',
                 hintStyle: TextStyle(
                   color: Colors.yellow,
-                  fontSize: 12.0,
+                  fontSize: 18.0,
                 ),
               ),
             ),
@@ -124,7 +113,21 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
             margin: EdgeInsets.symmetric(horizontal: 4.0),
             child: IconButton(
               icon: Icon(Icons.send),
+              color: Colors.grey[500],
               onPressed: isComposing ? () => manipulaCodigo(tedit.text) : null,
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 4.0),
+            child: RaisedButton(
+              child: Text(
+                'Finalizar',
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+              ),
+              color: Colors.grey[500],
+              onPressed: () => {encerrar()},
             ),
           ),
         ],
@@ -162,7 +165,7 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
                   padding: EdgeInsets.all(8.0),
                   reverse: true,
                   itemBuilder: (_, int index) => lcode[index],
-                  itemCount: lista.length,
+                  itemCount: lcode.length,
                 ),
               ),
               Divider(height: 1.0,),
@@ -195,7 +198,12 @@ class Code extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 8.0),
         child: Container(
           margin: EdgeInsets.only(top: 2.0),
-          child: Text(text),
+          child: Text(
+            text,
+            style: TextStyle(
+              color: Colors.yellow,
+            ),
+          ),
         ),
       ),
     );

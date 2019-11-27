@@ -27,12 +27,12 @@ class _HomeState extends State<Home> {
       var result = json.decode(message);
       if (result['response'] == "encontrado"){
         dadosOp = {
-          'nomeOp': result['nome'],
+          'nomeOp': result['usernameOP'],
           'pontosOp': result['pontos'],
           'vitoriasOp': result['vitorias'],
           'derrotasOp': result['derrotas'],
         };
-        print("OPONENTE ENCONTRADO -> ${result['nome']}");
+        print("OPONENTE ENCONTRADO -> ${result['usernameOP']}");
         WebSocketChannel channel2 = IOWebSocketChannel.connect('ws://192.168.0.101:8080/event');
         channel2.sink.add(json.encode({"function":"ingame","username": "${dados['nome']}","nomeOP":"${dadosOp['nomeOp']}"}));
         Map channelM = {
