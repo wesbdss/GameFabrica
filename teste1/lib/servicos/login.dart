@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
 
   void checkCredential() async {
     print('User: $username, Senha: $password');
-    final response = await http.post("http://192.168.0.101:8080/", // Tem que mudar toda vez OMEGALUL
+    final response = await http.post("https://lit-fortress-57323.herokuapp.com/", // Tem que mudar toda vez OMEGALUL
     headers: {"Content-type": "application/json"},
     body: json.encode({"function": "login","username":"$username","pass":"$password"}));
     final responseJson = json.decode(response.body);

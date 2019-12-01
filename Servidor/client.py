@@ -14,6 +14,7 @@ while msg != "sair":
         ws.send(json.dumps({"function":"ingame","username":username}))
     if msg == "3":
         ws.send(json.dumps({"function":"end","username":username}))
+    else quit()
     result = ws.recv()
     print("Reposta do server >>  '%s'" % result)
 
