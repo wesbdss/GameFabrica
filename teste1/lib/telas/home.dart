@@ -20,7 +20,11 @@ class _HomeState extends State<Home> {
   void parear() async {
     //desativar botao aqui !!
     print("(Home) -> Conectando com servidor");
+<<<<<<< HEAD
     WebSocketChannel channel = IOWebSocketChannel.connect('ws://lit-fortress-57323.herokuapp.com/event');
+=======
+    WebSocketChannel channel = IOWebSocketChannel.connect('wss://lit-fortress-57323.herokuapp.com/event');
+>>>>>>> ce5aefd9843d068ac9fd64e4e16ea74b94e727d5
     channel.sink.add(json.encode({"function":"jogar","username": dados['nome']}));
     print("(Home) -> Procurando Oponente");
     channel.stream.listen((message) {
@@ -33,7 +37,11 @@ class _HomeState extends State<Home> {
           'derrotasOp': result['derrotas'],
         };
         print("OPONENTE ENCONTRADO -> ${result['usernameOP']}");
+<<<<<<< HEAD
         WebSocketChannel channel2 = IOWebSocketChannel.connect('ws://lit-fortress-57323.herokuapp.com/event');
+=======
+        WebSocketChannel channel2 = IOWebSocketChannel.connect('wss://lit-fortress-57323.herokuapp.com/event');
+>>>>>>> ce5aefd9843d068ac9fd64e4e16ea74b94e727d5
         channel2.sink.add(json.encode({"function":"ingame","username": "${dados['nome']}","nomeOP":"${dadosOp['nomeOp']}"}));
         Map channelM = {
           'channel': channel2,
