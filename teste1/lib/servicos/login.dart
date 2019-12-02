@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
 
   void checkCredential() async {
     print('User: $username, Senha: $password');
-    final response = await http.post("http://192.168.0.101:8080/", // Tem que mudar toda vez OMEGALUL
+    final response = await http.post("http://lit-fortress-57323.herokuapp.com/", // Tem que mudar toda vez OMEGALUL
     headers: {"Content-type": "application/json"},
     body: json.encode({"function": "login","username":"$username","pass":"$password"}));
     final responseJson = json.decode(response.body);
@@ -70,6 +70,40 @@ class _LoginState extends State<Login> {
     setState(() {
       password = valor;
     });
+  }
+
+  void sobre() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // retorna um objeto do tipo Dialog
+        return AlertDialog(
+          title: new Text(
+            "Sobre",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: new Text(
+            "Trabalho de Fábrica de Software 2019/2 Alunos: Allan Leite, Emily Safira e Wesley Benicio 01/12/19",
+            style: TextStyle(
+              fontSize: 14.0,
+            ),
+          ),
+          actions: <Widget>[
+            // define os botões na base do dialogo
+            new FlatButton(
+              child: new Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -155,6 +189,13 @@ class _LoginState extends State<Login> {
                     checkCredential();
                   }
                 ),
+                SizedBox(height: 150.0),
+                FlatButton(
+                  child: Text(
+                    'Sobre'
+                  ),
+                  onPressed: () => {sobre()},
+                )
               ],
             ),
           ),

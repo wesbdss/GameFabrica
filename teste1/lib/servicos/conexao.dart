@@ -61,7 +61,7 @@ class Conexao {
     try {           
       cont();
       
-      final response = await http.post("http://192.168.0.101:8080/",
+      final response = await http.post("http://lit-fortress-57323.herokuapp.com/",
       headers: {"Content-type": "application/json"},
       body: json.encode({"function": "getInfo","username":"$username"}));
       final responseJson = json.decode(response.body);

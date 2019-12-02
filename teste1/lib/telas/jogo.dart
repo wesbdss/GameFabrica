@@ -12,7 +12,8 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
 
   String bgImage = 'fundo.jpg';
   String msg;
-  List <String> lista;
+  int line = 0;
+  String lista;
   final List<Code> lcode = <Code>[];
   final TextEditingController tedit = new TextEditingController();
   bool isComposing = false;
@@ -30,7 +31,7 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
   }
 
   void encerrar(){
-    dados['channel'].sink.add(json.encode({"function": "end", "code": lista.toString(), "username": dados['nome']}));
+    dados['channel'].sink.add(json.encode({"function": "end", "username": dados['nome']}));
     dados['channel'].stream.listen((message){
       var result = json.decode(message);
       if (result['response'] == "ok"){
@@ -59,10 +60,12 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
   }
 
   void manipulaCodigo(String text) {
-    tedit.clear();
+    dados['channel'].sink.add(json.encode({"function":"ingame","input":"$text","line":"$line","username":"${dados['nome']}"}));
     setState(() {
       isComposing = false;
+      line+=1;
     });
+    tedit.clear();
     Code codigo = new Code(
       text: text,
       animationController: AnimationController(
@@ -81,6 +84,40 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
       codigo.animationController.dispose();
     }
     super.dispose();
+  }
+
+  void dica() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // retorna um objeto do tipo Dialog
+        return AlertDialog(
+          title: new Text(
+            "Dica!!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: new Text(
+            "Comi o cu do curioso.",
+            style: TextStyle(
+              fontSize: 14.0,
+            ),
+          ),
+          actions: <Widget>[
+            // define os botões na base do dialogo
+            new FlatButton(
+              child: new Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Widget buildTextComposer() {
@@ -128,6 +165,14 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
               ),
               color: Colors.grey[500],
               onPressed: () => {encerrar()},
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 4.0),
+            child: IconButton(
+              icon: Icon(Icons.info_outline),
+              color: Colors.grey[500],
+              onPressed: () => {dica()},
             ),
           ),
         ],
