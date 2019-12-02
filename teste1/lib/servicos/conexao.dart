@@ -60,9 +60,7 @@ class Conexao {
     // Vai tentar conectar com o servidor
     try {           
       cont();
-
       final response = await http.post("http://lit-fortress-57323.herokuapp.com/",
-
       headers: {"Content-type": "application/json"},
       body: json.encode({"function": "getInfo","username":"$username"}));
       final responseJson = json.decode(response.body);
