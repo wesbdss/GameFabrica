@@ -173,7 +173,7 @@ class _LoginState extends State<Login> {
                   obscureText: true,
                   onChanged: (String valor) {inputPassword(valor);},
                 ),
-                SizedBox(height: 50.0),
+                SizedBox(height: 30.0),
                 GestureDetector(
                   child: Container(
                     width:120,
@@ -189,7 +189,7 @@ class _LoginState extends State<Login> {
                     checkCredential();
                   }
                 ),
-                SizedBox(height: 60.0),
+                SizedBox(height: 40.0),
                 FlatButton(
                   child: Text(
                     'Sobre',

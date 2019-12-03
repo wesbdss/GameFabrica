@@ -80,44 +80,94 @@ class _HomeState extends State<Home> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Nome:',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24.0,
+                            color: Colors.yellow,
+                          ),
+                        ),
+                        SizedBox(width: 15.0),
+                        Text(
+                          dados['nome'].toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24.0,
+                            color: Colors.yellow,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+                SizedBox(height: 25.0),
+                Row(
+                  children: <Widget>[
                     Text(
-                      dados['nome'].toString(),
+                      'Vitórias:',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 24.0,
                         color: Colors.yellow,
                       ),
-                    )
+                    ),
+                    SizedBox(width: 15.0),
+                    Text(
+                      dados['vitoria'].toString(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                        color: Colors.yellow,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30.0),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      'Derrotas:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                        color: Colors.yellow,
+                      ),
+                    ),
+                    SizedBox(width: 15.0),
+                    Text(
+                      dados['derrota'].toString(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                        color: Colors.yellow,
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 25.0),
-                Text(
-                  dados['vitoria'].toString(),
-                  //'10',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                    color: Colors.yellow,
-                  ),
-                ),
-                SizedBox(height: 30.0),
-                Text(
-                  dados['derrota'].toString(),
-                  //'2',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                    color: Colors.yellow,
-                  ),
-                ),
-                SizedBox(height: 25.0),
-                Text(
-                  dados['pontos'].toString(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24.0,
-                    color: Colors.yellow,
-                  ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      'Pontos:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                        color: Colors.yellow,
+                      ),
+                    ),
+                    SizedBox(width: 15.0),
+                    Text(
+                      dados['pontos'].toString(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0,
+                        color: Colors.yellow,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 40.0),
                 GestureDetector(

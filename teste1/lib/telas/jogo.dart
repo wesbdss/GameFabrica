@@ -104,11 +104,21 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
               fontWeight: FontWeight.bold,
             ),
           ),
-          content: new Text(
-            "Comi o cu do curioso.",
-            style: TextStyle(
-              fontSize: 14.0,
-            ),
+          content: Column(
+            children: <Widget>[
+              new Text(
+                "Crie um programa que mostre os 5 primeiros números primos",
+                style: TextStyle(
+                  fontSize: 14.0,
+                ),
+              ),
+              Text(
+                'Use a função print.',
+              ),
+              Text(
+                'Os 5 primeiros primos são 2,3,5,7,11'
+              ),
+            ],
           ),
           actions: <Widget>[
             // define os botões na base do dialogo
