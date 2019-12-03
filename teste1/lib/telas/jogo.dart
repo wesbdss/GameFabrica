@@ -20,17 +20,19 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
   Map dados = {};
   Map concat = {};
 
-  void perdeu() {
+  void perdeu(Map m) {
     print('indo pra tela de derrota');
-    Navigator.pushReplacementNamed(context, '/derrota', arguments: concat);
+    Navigator.pushReplacementNamed(context, '/derrota', arguments: m);
   }
 
-  void ganhou() {
+  void ganhou(Map m) {
     print('indo pra tela de vitória');
-    Navigator.pushReplacementNamed(context, '/vitoria', arguments: concat);
+    Navigator.pushReplacementNamed(context, '/vitoria', arguments: m);
   }
 
   void encerrar(){
+    print("Dados pontos");
+    print(dados['pontos']);
     dados['channel'].sink.add(json.encode({"function": "end", "username": dados['nome']}));
     dados['channel'].stream.listen((message){
       var result = json.decode(message);
@@ -39,20 +41,22 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
       }
       if (result['response'] == "fim"){
         Map pontosResult = {};
+        print("result pontos");
+        print(result['pontos']);
         if (result['status'] == "1"){
           pontosResult = {
-            'pontosR': '1'
+            'pontosR': result['pontos']
           };
           concat = {}..addAll(dados)..addAll(pontosResult);
-          ganhou();
+          ganhou(concat);
           dados['channel'].sink.close(status.goingAway);
         }
         if (result['status'] == "0"){
           pontosResult = {
-            'pontosR': '1'
+            'pontosR': result['pontos']
           };
           concat = {}..addAll(dados)..addAll(pontosResult);
-          perdeu();
+          perdeu(concat);
           dados['channel'].sink.close(status.goingAway);
         }
       }
@@ -121,6 +125,7 @@ class _JogoState extends State<Jogo> with TickerProviderStateMixin {
   }
 
   Widget buildTextComposer() {
+    
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(

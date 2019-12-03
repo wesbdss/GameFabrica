@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
 
   void checkCredential() async {
     print('User: $username, Senha: $password');
-    final response = await http.post("http://lit-fortress-57323.herokuapp.com/", // Tem que mudar toda vez OMEGALUL
+    final response = await http.post("http://lit-fortress-57323.herokuapp.com/",
     headers: {"Content-type": "application/json"},
     body: json.encode({"function": "login","username":"$username","pass":"$password"}));
     final responseJson = json.decode(response.body);
@@ -82,7 +82,7 @@ class _LoginState extends State<Login> {
             "Sobre",
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 16.0,
+              fontSize: 22.0,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -189,10 +189,13 @@ class _LoginState extends State<Login> {
                     checkCredential();
                   }
                 ),
-                SizedBox(height: 150.0),
+                SizedBox(height: 60.0),
                 FlatButton(
                   child: Text(
-                    'Sobre'
+                    'Sobre',
+                    style: TextStyle(
+                      color: Colors.yellow,
+                    ),
                   ),
                   onPressed: () => {sobre()},
                 )

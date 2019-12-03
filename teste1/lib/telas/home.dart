@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
         DeviceOrientation.portraitDown,
     ]);
     
-    dados = dados.isNotEmpty ? dados : ModalRoute.of(context).settings.arguments;
+    dados = ModalRoute.of(context).settings.arguments;
 
     //print(dados['nome']);
 

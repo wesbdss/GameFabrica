@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:teste1/servicos/conexao.dart';
+import 'dart:convert';
+import 'dart:core';
+import 'package:http/http.dart' as http;
 
 class Vitoria extends StatefulWidget {
   @override
@@ -9,9 +12,25 @@ class Vitoria extends StatefulWidget {
 
 class _VitoriaState extends State<Vitoria> {
 
-  void voltarHome() {
+  void voltarHome(Map d) async{
     print('voltando pra tela home');
-    Navigator.pushReplacementNamed(context, '/home', arguments: dados);
+    print(d);
+    int pontos = d['pontos'] + d['pontosR'];
+    print("Pontos: ");
+    print(pontos);
+    int vitoria = d['vitoria'] + 1;
+    print("Vitoria: ");
+    print(vitoria);
+    final response = await http.post("http://lit-fortress-57323.herokuapp.com/",
+    headers: {"Content-type": "application/json"},
+    body: json.encode({"function": "setInfo","username":"${d['nome']}","pontos":pontos.toString(),"vitoria":vitoria.toString(),"derrota":"${d['derrota']}"}));
+    Map victory = {
+      'nome': d['nome'],
+      'vitoria': vitoria.toString(),
+      'derrota': d['derrota'],
+      'pontos': pontos.toString()
+    };
+    Navigator.pushReplacementNamed(context, '/home', arguments: victory);
   }
 
   Conexao instance = Conexao();
@@ -27,19 +46,22 @@ class _VitoriaState extends State<Vitoria> {
     };
   }
 
+  
   Map dados = {};
   
   @override
   Widget build(BuildContext context) {
-
+    
     SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
         DeviceOrientation.portraitDown,
     ]);
 
-    dados = ModalRoute.of(context).settings.arguments;
-
-    getDados(dados);
+    dados = ModalRoute.of(context).settings.arguments;    
+    //getDados(dados);
+    print("Dados");
+    print(dados);
+    print(dados['pontosR']);
 
     String bgImage = 'fundoWin.jpg';
     Color bgColor = Colors.black;
@@ -68,12 +90,20 @@ class _VitoriaState extends State<Vitoria> {
                     Star(),
                     SizedBox(width: 5.0),
                     Pontos(),
+                    SizedBox(width: 12.0),
+                    Text(
+                      dados['pontosR'].toString(),
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 20.0,
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 50.0),
                 RaisedButton(
                   child: Text('voltar'),
-                  onPressed: () {voltarHome();},
+                  onPressed: () {voltarHome(dados);},
                 ),
               ],
             ),
@@ -142,10 +172,14 @@ class Pontos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Image.asset(
-        'assets/pontos.png',
-        height: 20.0,
-        width: 80.0,
+      child: Row(
+        children: <Widget>[
+          Image.asset(
+            'assets/pontos.png',
+            height: 20.0,
+            width: 80.0,
+          ),
+        ],
       ),
     );
   }

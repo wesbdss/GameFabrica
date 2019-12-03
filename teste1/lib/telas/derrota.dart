@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:teste1/servicos/conexao.dart';
+import 'dart:convert';
+import 'dart:core';
+import 'package:http/http.dart' as http;
 
 class Derrota extends StatefulWidget {
   @override
@@ -9,9 +12,29 @@ class Derrota extends StatefulWidget {
 
 class _DerrotaState extends State<Derrota> {
 
-  void voltarHome() {
+  void voltarHome(Map d) async{
     print('voltando pra tela home');
-    Navigator.pushReplacementNamed(context, '/home', arguments: dados);
+    print(d['pontosR']);
+    print(d['pontos']);
+    int pontos = d['pontos'] - d['pontosR'];
+    if(pontos < 0){
+      pontos = 0;
+    }
+    print("Pontos: ");
+    print(pontos);
+    int derrota = d['derrota'] + 1;
+    print("Derrota: ");
+    print(derrota);
+    final response = await http.post("http://lit-fortress-57323.herokuapp.com/",
+    headers: {"Content-type": "application/json"},
+    body: json.encode({"function": "setInfo","username":"${d['nome']}","pontos":pontos.toString(),"vitoria":"${d['vitoria']}","derrota":derrota.toString()}));
+    Map defeat = {
+      'nome': d['nome'],
+      'vitoria': d['vitoria'],
+      'derrota': derrota.toString(),
+      'pontos': pontos.toString()
+    };
+    Navigator.pushReplacementNamed(context, '/home', arguments: defeat);
   }
 
   Conexao instance = Conexao();
@@ -38,8 +61,10 @@ class _DerrotaState extends State<Derrota> {
     ]);
         
     dados = ModalRoute.of(context).settings.arguments;
-
-    getDados(dados);
+    //getDados(dados);
+    print("Dados");
+    print(dados);
+    print(dados['pontosR']);
 
     String bgImage = 'fundoLoss.jpg';
     Color bgColor = Colors.black;
@@ -68,12 +93,20 @@ class _DerrotaState extends State<Derrota> {
                     Star(),
                     SizedBox(width: 5.0),
                     Pontos(),
+                    SizedBox(width: 12.0),
+                    Text(
+                      dados['pontosR'].toString(),
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 20.0,
+                      ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 50.0),
                 RaisedButton(
                   child: Text('voltar'),
-                  onPressed: () {voltarHome();},
+                  onPressed: () {voltarHome(dados);},
                 ),
               ],
             ),
