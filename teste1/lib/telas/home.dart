@@ -105,6 +105,7 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 25.0),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       'Vitórias:',
@@ -127,6 +128,7 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 30.0),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       'Derrotas:',
@@ -149,6 +151,7 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 25.0),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       'Pontos:',

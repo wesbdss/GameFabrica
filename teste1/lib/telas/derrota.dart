@@ -124,7 +124,7 @@ class Trofeu extends StatelessWidget {
     //Image image = Image(image: trofeu, width: 10, height: 20,);
     return Container(
       child: Image.asset(
-        'assets/trophyWin.png',
+        'assets/trophyLoss.png',
         height: 150.0,
         width: 200.0
       ),
